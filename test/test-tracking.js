@@ -10,56 +10,51 @@ describe('RedemptionClient', () => {
   describe('#constructor', () => {
     it('should validate inputs', () => {
       assert.throws(() => {
-        new RedemptionClient(null, 'transactionId', 'GBP', 'customerSecret');
+        new RedemptionClient(null, 'transactionId', 'GBP');
       },
       Error);
       
       assert.throws(() => {
-        new RedemptionClient('partnerId', null, 'GBP', 'customerSecret');
+        new RedemptionClient('partnerId', null, 'GBP');
       },
       Error);
 
       assert.throws(() => {
-        new RedemptionClient('partnerId', 'transactionId', 'GBP', null);
-      },
-      Error);
-
-      assert.throws(() => {
-        new RedemptionClient('partnerId', 'transactionId', null , 'customerSecret');
+        new RedemptionClient('partnerId', 'transactionId', null);
       },
       Error);
     });
 
     it('should set inputs correctly', () => {
       let partnerId = 'partnerId',
-          customerSecret = 'customerSecret',
           transactionId = 'transactionId',
           currency = 'GBP';
-      const client = new RedemptionClient(partnerId, transactionId, currency, customerSecret);
+      const client = new RedemptionClient(partnerId, transactionId, currency);
 
       assert.strictEqual(client.partnerId, partnerId);
       assert.strictEqual(client.transactionId, transactionId);
       assert.strictEqual(client.currency, currency);
-      assert(client.customerSecret.equals(new Buffer(customerSecret, 'base64')));
     });
   });
 
   describe('#recordRedemption', () => {
     let client;
     let mock;
+    let customerSecret =  '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+
     before(() => {
       mock = fetchMock.sandbox();
       mock
         .post(/.*\/perks\/redemption\/v1\.2\?.*/, 'live')
         .post(/.*\/perks\/redemption\/v1\.2\-test.*/, 'test')
         .catch(404);
-      client = new RedemptionClient("partnerId", "transactionId", "GBP", "customerSecret", {fetch: mock});
+      client = new RedemptionClient("partnerId", "transactionId", "GBP", {fetch: mock});
     })
 
 
     it('should validate the redemption', () => {
       assert.throws(() => {
-        client.recordRedemption(undefined);
+        client.recordRedemption(undefined, customerSecret);
       },
       Error);
     });
@@ -77,7 +72,7 @@ describe('RedemptionClient', () => {
         itemsOtherDiscount: 10.00,
         UNiDAYSDiscountPercentage: 10.00,
         newCustomer: true
-      })
+      }, customerSecret)
       .then(res => {
         assert.strictEqual(res.status, 200);
         return res.text();
@@ -93,9 +88,8 @@ describe('RedemptionClient', () => {
     });
 
     it('should record redemption to the test endpoint when testMode === true', (done) => {
-      let testClient = new RedemptionClient('partnerId', 'transactionId', "GBP", 'customerSecret', {testMode: true, fetch: mock});
+      let testClient = new RedemptionClient('partnerId', 'transactionId', "GBP", {testMode: true, fetch: mock});
       testClient.recordRedemption({
-        transactionId: 'transactionId',
         memberId: 'memberId',
         orderTotal: 209.00,
         itemsUNiDAYSDiscount: 13.00,
@@ -107,7 +101,7 @@ describe('RedemptionClient', () => {
         itemsOtherDiscount: 10.00,
         UNiDAYSDiscountPercentage: 10.00,
         newCustomer: true
-      })
+      }, customerSecret)
       .then(res => {
         assert.strictEqual(res.status, 200);
         return res.text();
@@ -127,7 +121,7 @@ describe('RedemptionClient', () => {
     let client;
     let redemption;
     before(() => {
-      client = new RedemptionClient('partnerId', "transaction/Id", 'GBP', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
+      client = new RedemptionClient('partnerId', "transaction/Id", 'GBP');
       redemption = {
         memberId: 'memberId',
         orderTotal: 209.00,
@@ -172,7 +166,7 @@ describe('RedemptionClient', () => {
     let client;
     let redemption;
     before(() => {
-      client = new RedemptionClient('partnerId', "transaction/Id", 'GBP', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
+      client = new RedemptionClient('partnerId', "transaction/Id", 'GBP');
       redemption = {
         orderTotal: 209.00,
         itemsUNiDAYSDiscount: 13.00,
@@ -198,7 +192,7 @@ describe('RedemptionClient', () => {
     let client;
 
     before(() => {
-      client = new RedemptionClient("partnerId", "transaction/Id", 'GBP', "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
+      client = new RedemptionClient("partnerId", "transaction/Id", 'GBP');
     });
 
     it('should validate the redemption', () => {
@@ -228,15 +222,16 @@ describe('RedemptionClient', () => {
   });
  
   describe('#getSignedTrackingPixelUrl', () => {
-    let client;
+    let client,
+    customerSecret = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
 
     before(() => {
-      client = new RedemptionClient("partnerId", "transaction/Id", 'GBP', "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
+      client = new RedemptionClient("partnerId", "transaction/Id", 'GBP');
     });
 
     it('should validate the redemption', () => {
       assert.throws(() => {
-        client.getSignedTrackingPixelUrl(null);
+        client.getSignedTrackingPixelUrl(null, customerSecret);
       },
       Error);
     });
@@ -254,21 +249,22 @@ describe('RedemptionClient', () => {
         itemsOtherDiscount: 10.00,
         UNiDAYSDiscountPercentage: 10.00,
         newCustomer: true
-      });
+      }, customerSecret);
 
-      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.gif?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=Q82jSo08TYNWquRjgSxYQcDIUwxqrM5%2fexZXHuUOK27bwVBMiBIIUuNTJuMza7TALN2lSD4gyuQGpQTgSXavRQ%3d%3d');
+      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.gif?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=J7zpDfftsTBvLZ5n23HfbK71MsgYRZlhWF20K%2fF75%2bTdZkga1ErBj4HbgyzDMcnLo1lDMfCzoBwcB4OGsEc6Jw%3d%3d');
     });
   });
 
   describe('#getTrackingServerUrl', () => {
-    let client;
+    let client,
+    customerSecret = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
     before(() => {
-      client = new RedemptionClient('partnerId', "transaction/Id", 'GBP', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
+      client = new RedemptionClient('partnerId', "transaction/Id", 'GBP');
     })
 
     it('should validate the redemption', () => {
       assert.throws(() => {
-        client.getTrackingServerUrl(null);
+        client.getTrackingServerUrl(null, customerSecret);
       },
       Error);
     });
@@ -286,9 +282,9 @@ describe('RedemptionClient', () => {
         itemsOtherDiscount: 10.00,
         UNiDAYSDiscountPercentage: 10.00,
         newCustomer: true
-      });
+      }, customerSecret);
 
-      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.js?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=Q82jSo08TYNWquRjgSxYQcDIUwxqrM5%2fexZXHuUOK27bwVBMiBIIUuNTJuMza7TALN2lSD4gyuQGpQTgSXavRQ%3d%3d');
+      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.js?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=J7zpDfftsTBvLZ5n23HfbK71MsgYRZlhWF20K%2fF75%2bTdZkga1ErBj4HbgyzDMcnLo1lDMfCzoBwcB4OGsEc6Jw%3d%3d');
     });
   })
 });

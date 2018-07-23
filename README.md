@@ -72,11 +72,9 @@ const UNiDAYS = require('../lib/index.js'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
 // Initialise a new UNiDAYS client with the partnerId and customerSecret provided to you during the setup process
-let client = new RedemptionClient('{YourPartnerId}', '{YourCustomerSecret}');
+let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}');
 
 let trackingServerUrl = client.getTrackingServerUrl({
-	transactionId: 'transactionId-' + Date.now(),
-	currency: 'GBP',
 	memberId: 'memberId',
 	orderTotal: 209.00,
 	itemsUNiDAYSDiscount: 13.00,
@@ -88,7 +86,7 @@ let trackingServerUrl = client.getTrackingServerUrl({
 	itemsOtherDiscount: 10.00,
 	UNiDAYSDiscountPercentage: 10.00,
 	newCustomer: true
-});
+}, '{YourCustomerSecret}');
 ```
 
 ### Send Request
@@ -103,7 +101,7 @@ The underlying implementation of `recordRedemption` uses node-fetch to call the 
 const UNiDAYS = require('../lib/index.js'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-let client = new RedemptionClient('{YourPartnerId}', '{YourCustomerSecret}');
+let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}');
 
 client.recordRedemption({
 	transactionId: 'transactionId-' + Date.now(),
@@ -119,7 +117,7 @@ client.recordRedemption({
 	itemsOtherDiscount: 10.00,
 	UNiDAYSDiscountPercentage: 10.00,
 	newCustomer: true
-}).then(res => {
+}, '{YourCustomerSecret}').then(res => {
 	if (!res.ok) {
 		let error = new Error(res.statusText);
 		error.result = res;
@@ -136,7 +134,7 @@ client.recordRedemption({
 ### Client To Server
 
 #### Example 
-Calls to get a Pixels URL can be signed or unsigned. This is the difference between calling `getSignedTrackingPixelUrl` or `getTrackingPixelUrl`. The arguments for both of these calls are the same.
+Calls to get a Pixels URL can be signed or unsigned. This is the difference between calling `getSignedTrackingPixelUrl` or `getTrackingPixelUrl`. The arguments for both of these calls are the same apart from `getSignedTrackingPixelUrl` requires your customer secret as the second argument.
 
 ```javascript
 
@@ -145,7 +143,7 @@ Calls to get a Pixels URL can be signed or unsigned. This is the difference betw
 const UNiDAYS = require('../lib/index.js'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-let client = new RedemptionClient('{YourPartnerId}', '{YourCustomerSecret}');
+let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}');
 
 let trackingPixelUrl = client.getTrackingPixelUrl({
 	transactionId: 'transactionId-' + Date.now(),
@@ -162,6 +160,24 @@ let trackingPixelUrl = client.getTrackingPixelUrl({
 	UNiDAYSDiscountPercentage: 10.00,
 	newCustomer: true
 });
+
+
+let trackingPixelUrl = client.getSignedTrackingPixelUrl({
+	transactionId: 'transactionId-' + Date.now(),
+	memberId: 'memberId',
+	currency: 'GBP',
+	orderTotal: 209.00,
+	itemsUNiDAYSDiscount: 13.00,
+	code: 'ABC123',
+	itemsTax: 34.50,
+	shippingGross: 5.00,
+	shippingDiscount: 3.00,
+	itemsGross: 230.00,
+	itemsOtherDiscount: 10.00,
+	UNiDAYSDiscountPercentage: 10.00,
+	newCustomer: true
+}, '{YourCustomerSecret}');
+
 ```
 
 ### Test endpoint
@@ -171,7 +187,7 @@ To record test redemptions during development pass in { testMode:true } as a 3rd
 #### Example
 ```javascript
 
-let client = new RedemptionClient('{YourPartnerId}', '{YourCustomerSecret}', { testMode: true }); 
+let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}', { testMode: true }); 
 
 ```
 
