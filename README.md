@@ -145,7 +145,7 @@ Calls to get a Pixels URL can be signed or unsigned. This is the difference betw
 const UNiDAYS = require('../lib/index.js'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-let client = new RedemptionClient('{YourCustomerId}', '{YourCustomerSecret}');
+let client = new RedemptionClient('{YourPartnerId}', '{YourCustomerSecret}');
 
 let trackingPixelUrl = client.getTrackingPixelUrl({
 	transactionId: 'transactionId-' + Date.now(),

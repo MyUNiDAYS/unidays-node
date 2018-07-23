@@ -81,7 +81,7 @@ describe('RedemptionClient', () => {
     });
 
     it('should record redemption to the test endpoint when testMode === true', (done) => {
-      let testClient = new RedemptionClient('customerId', 'customerSecret', {testMode: true, fetch: mock});
+      let testClient = new RedemptionClient('partnerId', 'customerSecret', {testMode: true, fetch: mock});
       testClient.recordRedemption({
         transactionId: 'transactionId',
         memberId: 'memberId',
@@ -107,36 +107,6 @@ describe('RedemptionClient', () => {
       })
       .catch(err => {
         assert.fail();
-        done();
-      });
-    });
-
-    it('should successfully record a live test redemption', (done) => {
-      if (process.env.UNiDAYSCustomerId == null || process.env.UNiDAYSCustomerSecret == null) assert.fail();
-      let testClient = new RedemptionClient(process.env.UNiDAYSCustomerId, process.env.UNiDAYSCustomerSecret, { testMode: true });
-
-      testClient.recordRedemption({
-        transactionId: 'NodeSDKIntegrationTest-' + Date.now(),
-        currency: 'GBP',
-        orderTotal: 209.00,
-        itemsUNiDAYSDiscount: 13.00,
-        code: 'ABC123',
-        itemsTax: 34.50,
-        shippingGross: 5.00,
-        shippingDiscount: 3.00,
-        itemsGross: 230.00,
-        itemsOtherDiscount: 10.00,
-        UNiDAYSDiscountPercentage: 10.00,
-        newCustomer: true
-      }).then(res => {
-        assert.strictEqual(res.status, 200);
-        
-      })
-      .catch(err => {
-        console.log(err);
-        assert.fail();
-      })
-      .then(_ => {
         done();
       });
     });
@@ -167,7 +137,7 @@ describe('RedemptionClient', () => {
     it('should serialise a full redemption correctly', () => {
       let qs = client.toQueryString(redemption);
 
-      assert(qs.includes('?CustomerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
+      assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
     });
 
     it('should return lowercase encoded characters', () => {
@@ -213,7 +183,7 @@ describe('RedemptionClient', () => {
     it('should serialise a full redemption without undefined parameters', () => {
       let qs = client.toQueryString(redemption);
 
-      assert(qs.includes('?CustomerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
+      assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
     });
   });
 
@@ -221,7 +191,7 @@ describe('RedemptionClient', () => {
     let client;
 
     before(() => {
-      client = new RedemptionClient("customerId", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
+      client = new RedemptionClient("partnerId", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
     });
 
     it('should validate the redemption', () => {
@@ -248,7 +218,7 @@ describe('RedemptionClient', () => {
         newCustomer: true
       });
 
-      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.gif?CustomerId=customerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true');
+      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.gif?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true');
     });
   });
  
@@ -256,7 +226,7 @@ describe('RedemptionClient', () => {
     let client;
 
     before(() => {
-      client = new RedemptionClient("customerId", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
+      client = new RedemptionClient("partnerId", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
     });
 
     it('should validate the redemption', () => {
@@ -283,14 +253,14 @@ describe('RedemptionClient', () => {
         newCustomer: true
       });
 
-      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.gif?CustomerId=customerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=Au5jCeud528fCOyI4zPlSwHc%2bjuCMigWPA0jp%2fgcsyqhD%2fbeKzYyDPpDkZ%2f8A1YjQa2JuanM4O8tn3JLYk7YAg%3d%3d');
+      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.gif?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=Q82jSo08TYNWquRjgSxYQcDIUwxqrM5%2fexZXHuUOK27bwVBMiBIIUuNTJuMza7TALN2lSD4gyuQGpQTgSXavRQ%3d%3d');
     });
   });
 
   describe('#getTrackingServerUrl', () => {
     let client;
     before(() => {
-      client = new RedemptionClient('customerId', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
+      client = new RedemptionClient('partnerId', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
     })
 
     it('should validate the redemption', () => {
@@ -317,7 +287,7 @@ describe('RedemptionClient', () => {
         newCustomer: true
       });
 
-      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.js?CustomerId=customerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=Au5jCeud528fCOyI4zPlSwHc%2bjuCMigWPA0jp%2fgcsyqhD%2fbeKzYyDPpDkZ%2f8A1YjQa2JuanM4O8tn3JLYk7YAg%3d%3d');
+      assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/perks/redemption/v1.2.js?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=Q82jSo08TYNWquRjgSxYQcDIUwxqrM5%2fexZXHuUOK27bwVBMiBIIUuNTJuMza7TALN2lSD4gyuQGpQTgSXavRQ%3d%3d');
     });
   })
 });
