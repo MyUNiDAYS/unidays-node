@@ -10,22 +10,28 @@ describe('RedemptionClient', () => {
   describe('#constructor', () => {
     it('should validate inputs', () => {
       assert.throws(() => {
-        new RedemptionClient(null, 'customerSecret');
+        new RedemptionClient(null, 'transactionId', 'customerSecret');
+      },
+      Error);
+      assert.throws(() => {
+        new RedemptionClient('partnerId', null, 'customerSecret');
       },
       Error);
 
       assert.throws(() => {
-        new RedemptionClient('partnerId', null);
+        new RedemptionClient('partnerId', 'transactionId', null);
       },
       Error);
     });
 
     it('should set inputs correctly', () => {
       let partnerId = 'partnerId',
-          customerSecret = 'customerSecret';
-      const client = new RedemptionClient(partnerId, customerSecret);
+          customerSecret = 'customerSecret',
+          transactionId = 'transactionId';
+      const client = new RedemptionClient(partnerId, transactionId, customerSecret);
 
       assert.strictEqual(client.partnerId, partnerId);
+      assert.strictEqual(client.transactionId, transactionId);
       assert(client.customerSecret.equals(new Buffer(customerSecret, 'base64')));
     });
   });
@@ -39,7 +45,7 @@ describe('RedemptionClient', () => {
         .post(/.*\/perks\/redemption\/v1\.2\?.*/, 'live')
         .post(/.*\/perks\/redemption\/v1\.2\-test.*/, 'test')
         .catch(404);
-      client = new RedemptionClient("partnerId", "customerSecret", {fetch: mock});
+      client = new RedemptionClient("partnerId", "transactionId", "customerSecret", {fetch: mock});
     })
 
 
@@ -81,7 +87,7 @@ describe('RedemptionClient', () => {
     });
 
     it('should record redemption to the test endpoint when testMode === true', (done) => {
-      let testClient = new RedemptionClient('partnerId', 'customerSecret', {testMode: true, fetch: mock});
+      let testClient = new RedemptionClient('partnerId', 'transactionId', 'customerSecret', {testMode: true, fetch: mock});
       testClient.recordRedemption({
         transactionId: 'transactionId',
         memberId: 'memberId',
@@ -116,9 +122,8 @@ describe('RedemptionClient', () => {
     let client;
     let redemption;
     before(() => {
-      client = new RedemptionClient('partnerId', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
+      client = new RedemptionClient('partnerId', "transaction/Id", '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
       redemption = {
-        transactionId: 'transaction/Id',
         currency: 'GBP',
         memberId: 'memberId',
         orderTotal: 209.00,
@@ -163,9 +168,8 @@ describe('RedemptionClient', () => {
     let client;
     let redemption;
     before(() => {
-      client = new RedemptionClient('partnerId', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
+      client = new RedemptionClient('partnerId', "transaction/Id", '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
       redemption = {
-        transactionId: 'transaction/Id',
         currency: 'GBP',
         orderTotal: 209.00,
         itemsUNiDAYSDiscount: 13.00,
@@ -191,7 +195,7 @@ describe('RedemptionClient', () => {
     let client;
 
     before(() => {
-      client = new RedemptionClient("partnerId", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
+      client = new RedemptionClient("partnerId", "transaction/Id", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
     });
 
     it('should validate the redemption', () => {
@@ -203,7 +207,6 @@ describe('RedemptionClient', () => {
 
     it('should return a valid tracking pixel url', () => {
       var trackingPixelUrl = client.getTrackingPixelUrl({
-        transactionId: 'transaction/Id',
         currency: 'GBP',
         memberId: 'memberId',
         orderTotal: 209.00,
@@ -226,7 +229,7 @@ describe('RedemptionClient', () => {
     let client;
 
     before(() => {
-      client = new RedemptionClient("partnerId", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
+      client = new RedemptionClient("partnerId", "transaction/Id", "+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=");
     });
 
     it('should validate the redemption', () => {
@@ -238,7 +241,6 @@ describe('RedemptionClient', () => {
 
     it('should return a valid tracking pixel url', () => {
       var trackingPixelUrl = client.getSignedTrackingPixelUrl({
-        transactionId: 'transaction/Id',
         currency: 'GBP',
         memberId: 'memberId',
         orderTotal: 209.00,
@@ -260,7 +262,7 @@ describe('RedemptionClient', () => {
   describe('#getTrackingServerUrl', () => {
     let client;
     before(() => {
-      client = new RedemptionClient('partnerId', '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
+      client = new RedemptionClient('partnerId', "transaction/Id", '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=');
     })
 
     it('should validate the redemption', () => {
@@ -272,7 +274,6 @@ describe('RedemptionClient', () => {
 
     it('should return a valid js tracking url', () => {
       var trackingPixelUrl = client.getTrackingServerUrl({
-        transactionId: 'transaction/Id',
         currency: 'GBP',
         memberId: 'memberId',
         orderTotal: 209.00,
