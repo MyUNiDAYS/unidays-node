@@ -11,13 +11,12 @@ This document outlines the different ways you can contribute to the UNiDAYS repo
 [How Can I Contribute?](#how-can-i-contribute)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
+  * [Check tests pass](#running-tests)
   * [Pull Requests](#pull-requests)
   * [Your First Code Contribution](#your-first-code-contribution)
 
 [Styleguides](#styleguides)
   * [Git Commit Messages](#git-commit-messages)
-  * [JavaScript Styleguide](#javascript-styleguide)
-  * [CSS Styleguide](#css-styleguide)
   * [Documentation Styleguide](#css-styleguide)
 
 ## How Can I Contribute?
@@ -31,6 +30,14 @@ When issuing a bug report please include as many of details on [the bug report t
 Enhancements may include completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion and find related suggestions.
 
 First of all please do a search on the issues already present to see if it's an enhancement that hasn't previously been suggested. If it has, maybe join the discussion on the pre-existing issue. This is to help reduce duplication of issues. If it hasn't been raised previously, please include as many details as you can using [the feature request template](feature_request.md). Label the raised feature request as `enhancement`
+
+### Running tests :heavy_check_mark:
+
+After pulling down the project, and before pushing to your branch, we would like for you to check that all the tests pass.
+
+If you haven't already, run `npm install`
+
+The tests in this project are written in [mocha](https://mochajs.org/). As such, to run the tests type `npm test` into the terminal of your choice. It should run the tests and output the results.
 
 ### Pull Requests :thought_balloon:
 
@@ -66,14 +73,6 @@ We request that, where possible, you stick to the following format for your comm
 - After the first line, be descriptive about what has been done in the commit.
 
 For reference, [this blog](https://chris.beams.io/posts/git-commit/) encourages a similar style.
-
-### JavaScript Styleguide
-
-A full and up to date JavaScript style guide with examples can be accessed [here](https://github.com/johnnolan/StyleGuide/tree/master/Javascript).
-
-### CSS Styleguide
-
-A full and up to date css style guide with examples can be accessed [here](https://github.com/johnnolan/StyleGuide/tree/master/CSS).
 
 ## Documentation Styleguide
 
