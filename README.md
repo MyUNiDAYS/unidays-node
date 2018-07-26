@@ -1,8 +1,32 @@
-# UNiDAYS Node Tracking Helper
+
+<p align="center">
+  <img src="./assets/UNIDAYS_Logo.png" />
+</p>
+<br/>
 
 [![npm](https://img.shields.io/npm/dt/express.svg)](https://www.npmjs.com/package/unidays.tracking)
 
+# UNiDAYS Node Tracking Helper
+
 This is the NodeJs library for UNiDAYS redemption tracking. This is to be used for coded and codeless integrations. The following documentation provides descriptions of the implementation, examples for getting a server request url, signed and unsigned pixel urls and sending a request through this SDK.
+
+## Contents
+
+- [How to use this code?](#how-to-use-this-code)
+- [Parameters](#parameters)
+	- [Example Basket](#example-basket)
+
+- [Example Usage](#example-usage)
+	- [Get Server Request URL](#get-server-request-url)
+	- [Send Request](#send-request)
+	- [Client To Server](#client-to-server)
+	- [Codeless Client](#codeless-client)
+	- [Test endpoint](#test-endpoint)
+
+
+## How to use this code
+
+
 
 ## Parameters
 
@@ -56,7 +80,6 @@ Below are examples of implementing the server to server and client to server int
 
 ### Get Server Request URL
 
-All server requests are signed, but we deal with that so you don't have to.
 
 `getTrackingServerUrl` generates a script url to inject into a: 
 ```html 
@@ -180,18 +203,7 @@ let trackingPixelUrl = client.getSignedTrackingPixelUrl({
 
 ```
 
-### Test endpoint
-
-To record test redemptions during development pass in { testMode:true } as a 3rd optional argument. The rest of the code example should remain the same. This will not record a live redemption.
-
-#### Example
-```javascript
-
-let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}', { testMode: true }); 
-
-```
-
-### CodelessClient
+### Codeless Client
 
 #### Example
 ```javascript
@@ -210,5 +222,16 @@ client.hash(studentId, timestamp)
 
 //Validate hash
 validHash = client.validate(studentId, timestamp, hash)
+
+```
+
+### Test endpoint
+
+To record test redemptions during development pass in { testMode:true } as a 3rd optional argument. The rest of the code example should remain the same. This will not record a live redemption.
+
+#### Example
+```javascript
+
+let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}', { testMode: true }); 
 
 ```
