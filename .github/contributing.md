@@ -1,6 +1,11 @@
+<p align="center">
+  <img src="./assets/UNIDAYS_Logo.png" />
+</p>
+<br/>
+
 # UNiDAYS Contributors Guide.
 
-:star: Thanks for taking the time to contribute :star: 
+:star: Thanks for taking the time to contribute :star:
 
 This document outlines the different ways you can contribute to the UNiDAYS repositories, guidelines on how to do it and some of our standardisations. Everything is open to improvement and all of these are guidelines. If you can think of something we can change or are missing in this doc - you can even open a pull request for making that kind of change.
 
@@ -49,7 +54,7 @@ The tests in this project are written in [mocha](https://mochajs.org/). As such,
 | enhancement      | Making things _better_ but without fixing an issue     |   enhancement_improveperformanceofquery |
 | fix  | Fixing a pre-existing problem with the code that isn't an issue      | fix_acceptnullsforinput |
 
-- Open a Pull Request with the details listed in the [pull request template](pull_request_template.md). The sections of this template should show in the body of any new pull request automatically. 
+- Open a Pull Request with the details listed in the [pull request template](pull_request_template.md). The sections of this template should show in the body of any new pull request automatically.
 
 - Please ensure that any changes you make comply with our [styleguides](#styleguides).
 

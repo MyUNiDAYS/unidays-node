@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="./assets/UNIDAYS_Logo.png" />
+</p>
+<br/>
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
