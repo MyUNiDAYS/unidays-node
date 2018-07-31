@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="./assets/UNIDAYS_Logo.png" />
 </p>
@@ -6,56 +5,71 @@
 
 [![npm](https://img.shields.io/npm/dt/express.svg)](https://www.npmjs.com/package/unidays.tracking)
 
-# UNiDAYS Node Tracking Helper
+# UNiDAYS NodeJS Library
 
-This is the NodeJs library for UNiDAYS redemption tracking. This is to be used for coded and codeless integrations. The following documentation provides descriptions of the implementation, examples for getting a server request url, signed and unsigned pixel urls and sending a request through this SDK.
+This is the NodeJS library for integrating with UNiDAYS. This is to be used for coded and codeless integrations. The following documentation provides descriptions of the implementations and examples.
 
 ## Contents
 
-- [How to use this code?](#how-to-use-this-code)
+[**How to use this code?**](#how-to-use-this-code)
+
+[**Direct Tracking**](#direct-tracking)
 - [Parameters](#parameters)
-	- [Example Basket](#example-basket)
-
+    - [Example Basket](#example-basket)
 - [Example Usage](#example-usage)
-	- [Get Server Request URL](#get-server-request-url)
-	- [Send Request](#send-request)
-	- [Client To Server](#client-to-server)
-	- [Codeless Client](#codeless-client)
-	- [Test endpoint](#test-endpoint)
+    - [Get Tracking Script URL _(returns url for client-to-server request)_](#get-tracking-script-url)
+    - [Get Signed Tracking Script URL _(returns a signed url for client-to-server request)_](#get-signed-tracking-script-url)
+    - [Get Tracking Server URL _(returns url for server-to-server request)_](#get-tracking-server-url)
+    - [Record Redemption _(builds and sends server-to-server request)_](#record-redemption)
+    - [Test Endpoint](#test-endpoint)
 
+[**Codeless Verification**](#codeless-verification)
+- [Codeless API](#codeless-api)
+    - [Validate](#validate)
+
+[**Contributing**](#contributing)
 
 ## How to use this code
 
+- Pull the package from [npm]().
+- See the example usage section for the type of call you intend to use. Each of these contains an example.
 
+## Direct Tracking
 
-## Parameters
+### Parameters
 
 Here is a description of all the available parameters. Which of these you provide to us are dependant on the agreed contract.
 
-Mandatory parameters are:
-
-* `PartnerId`
-* `TransactionId`
-* `Currency`
-* `Code` or `MemberId`
-
-Note any of the following properties to which the value is unknown should be omitted from calls.
+### Mandatory Parameters
 
 | Parameter | Description | Data Type | Example |
 |---|---|---|---|
-| TransactionId | A unique ID for the transaction in your system | String | Order123 |
-| MemberId | Only to be provided if you are using a codeless integration | String | 0LTio6iVNaKj861RM9azJQ== |
-| Currency | The ISO 4217 currency code | String | GBP |
-| OrderTotal | Total monetary amount paid, formatted to 2 decimal places | Decimal | 209.00 |
-| ItemsUNiDAYSDiscount | Total monetary amount of UNiDAYS discount applied on gross item value `ItemsGross`, formatted to 2 decimal places | Decimal | 13.00 |
-| Code | The UNiDAYS discount code used | String | ABC123 |
-| ItemsTax | Total monetary amount of tax applied to items, formatted to 2 decimal places | Decimal | 34.50
-| ShippingGross | Total monetary amount of shipping cost, before any shipping discount or tax applied, formatted to 2 decimal places | Decimal | 5.00 |
-| ShippingDiscount | Total monetary amount of shipping discount (UNiDAYS or otherwise) applied to the order, formatted to 2 decimal places | Decimal | 3.00 |
-| ItemsGross | Total monetary amount of the items, including tax, before any discounts are applied, formatted to 2 decimal places | Decimal | 230.00 |
-| ItemsOtherDiscount | Total monetary amount of all non UNiDAYS discounts applied to `ItemsGross`, formatted to 2 decimal places | Decimal | 10.00 |
+| partnerId | Your PartnerId as provided by UNiDAYS. If you operate in multiple geographic regions you MAY have a different PartnerId for each region | String | XaxptFh0sK8Co6pI== |
+| transactionId | A unique ID for the transaction in your system | String | Order123 |
+| currency | The ISO 4217 currency code | String | GBP |
+
+Having **either** Code or MemberID as a parameter is also mandatory:
+
+| Parameter | Description | Data Type | Example |
+|---|---|---|---|
+| code | The UNiDAYS discount code used | String | ABC123 |
+| memberId | Only to be provided if you are using a codeless integration | String | 0LTio6iVNaKj861RM9azJQ== |
+
+### Optional Parameters
+
+Note any of the following properties to which the value is unknown should be omitted from calls. Which of the following values you provide to us will depend on your agreed contract.
+
+| Parameter | Description | Data Type | Example |
+|---|---|---|---|
+| orderTotal | Total monetary amount paid, formatted to 2 decimal places | Decimal | 209.00 |
+| itemsUNiDAYSDiscount | Total monetary amount of UNiDAYS discount applied on gross item value `itemsGross`, formatted to 2 decimal places | Decimal | 13.00 |
+| itemsTax | Total monetary amount of tax applied to items, formatted to 2 decimal places | Decimal | 34.50
+| shippingGross | Total monetary amount of shipping cost, before any shipping discount or tax applied, formatted to 2 decimal places | Decimal | 5.00 |
+| shippingDiscount | Total monetary amount of shipping discount (UNiDAYS or otherwise) applied to the order, formatted to 2 decimal places | Decimal | 3.00 |
+| itemsGross | Total monetary amount of the items, including tax, before any discounts are applied, formatted to 2 decimal places | Decimal | 230.00 |
+| itemsOtherDiscount | Total monetary amount of all non UNiDAYS discounts applied to `itemsGross`, formatted to 2 decimal places | Decimal | 10.00 |
 | UNiDAYSDiscountPercentage | The UNiDAYS discount applied, as a percentage, formatted to 2 decimal places | Decimal | 10.00 |
-| NewCustomer | Is the user a new (vs returning) customer to you? | Boolean | true or false |
+| newCustomer | Is the user a new (vs returning) customer to you? | Boolean | true or false |
 
 ### Example Basket
 
@@ -76,88 +90,29 @@ Here is an example basket with the fields relating to UNiDAYS tracking parameter
 
 ## Example Usage
 
-Below are examples of implementing the server to server and client to server integrations. These examples cover both coded and codeless integrations and include all optional parameters. They are intended as a guideline for implementation.
+Below are the four options for implementing your integration. These examples cover both coded and codeless integrations (see the live analytics PDF for details) and include all optional parameters. They are intended as a guideline for implementation.
 
-### Get Server Request URL
+- [Get Tracking Script URL _(returns url for client-to-server request)_](#get-tracking-script-url)
+- [Get Signed Tracking Script URL _(returns a signed url for client-to-server request)_](#get-signed-tracking-script-url)
+- [Get Tracking Server URL _(returns url for server-to-server request)_](#get-tracking-server-url)
+- [Record Redemption _(builds and sends server-to-server request)_](#record-redemption)
+- [Test Endpoint](#test-endpoint)
 
+### Get Tracking Script URL
 
-`getTrackingServerUrl` generates a script url to inject into a: 
-```html 
-<script src="{jsTrackingUrl}"> tag on your receipt/post-payment page
-```
+This is known as our client-to-server integration.
 
-#### Example
-```javascript
+#### Making the call
 
-"use strict";
+The method to get the URL to make a client-to-server request with is `getTrackingScriptUrl()`. To implement this method you first need to ensure that you have access to all required transaction details.
 
-const UNiDAYS = require('../lib/index.js'),
-      RedemptionClient = UNiDAYS.RedemptionClient;
+Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments (`RedemptionClient(partnerId, currency, transactionId)`) and call `.getTrackingScriptUrl(redemption)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API.
 
-// Initialise a new UNiDAYS client with the partnerId and customerSecret provided to you during the setup process
-let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}');
+#### Return
 
-let trackingServerUrl = client.getTrackingServerUrl({
-	memberId: 'memberId',
-	orderTotal: 209.00,
-	itemsUNiDAYSDiscount: 13.00,
-	code: 'ABC123',
-	itemsTax: 34.50,
-	shippingGross: 5.00,
-	shippingDiscount: 3.00,
-	itemsGross: 230.00,
-	itemsOtherDiscount: 10.00,
-	UNiDAYSDiscountPercentage: 10.00,
-	newCustomer: true
-}, '{YourCustomerSecret}');
-```
-
-### Send Request
-
-The underlying implementation of `recordRedemption` uses node-fetch to call the UNiDAYS Tracking API and returns a promise confirming the successful recording with a HTTP 200 status, or a 4xx error detailing issues with the request. See https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API for more information. 
+A URL will be returned to you, which can then be used to call the UNiDAYS Tracking API.
 
 #### Example
-```javascript
-
-"use strict";
-
-const UNiDAYS = require('../lib/index.js'),
-      RedemptionClient = UNiDAYS.RedemptionClient;
-
-let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}');
-
-client.recordRedemption({
-	transactionId: 'transactionId-' + Date.now(),
-	memberId: 'memberId',
-	currency: 'GBP',
-	orderTotal: 209.00,
-	itemsUNiDAYSDiscount: 13.00,
-	code: 'ABC123',
-	itemsTax: 34.50,
-	shippingGross: 5.00,
-	shippingDiscount: 3.00,
-	itemsGross: 230.00,
-	itemsOtherDiscount: 10.00,
-	UNiDAYSDiscountPercentage: 10.00,
-	newCustomer: true
-}, '{YourCustomerSecret}').then(res => {
-	if (!res.ok) {
-		let error = new Error(res.statusText);
-		error.result = res;
-		throw error;
-	}
-}).catch(err => {
-	// the response will detail errors with the request. 
-	if (err.result)
-		err.result.json().then(json => console.log(json));
-});
-
-```
-
-### Client To Server
-
-#### Example 
-Calls to get a Pixels URL can be signed or unsigned. This is the difference between calling `getSignedTrackingPixelUrl` or `getTrackingPixelUrl`. The arguments for both of these calls are the same apart from `getSignedTrackingPixelUrl` requires your customer secret as the second argument.
 
 ```javascript
 
@@ -166,46 +121,52 @@ Calls to get a Pixels URL can be signed or unsigned. This is the difference betw
 const UNiDAYS = require('../lib/index.js'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}');
+// UNiDAYS will provide your partnerId.
+var partnerId = '0LTio6iVNaKj861RM9azJQ==';
 
-let trackingPixelUrl = client.getTrackingPixelUrl({
-	transactionId: 'transactionId-' + Date.now(),
-	memberId: 'memberId',
-	currency: 'GBP',
-	orderTotal: 209.00,
-	itemsUNiDAYSDiscount: 13.00,
-	code: 'ABC123',
-	itemsTax: 34.50,
-	shippingGross: 5.00,
-	shippingDiscount: 3.00,
-	itemsGross: 230.00,
-	itemsOtherDiscount: 10.00,
-	UNiDAYSDiscountPercentage: 10.00,
-	newCustomer: true
-});
+// These must be based on the real values of the transaction
+var transactionId = 'Order123',
+    currency = 'GBP';
 
+// Create a reference to the RedemptionClient object, passing in your partnerId, transactionId and currency.
+var client = new RedemptionClient(partnerId, transactionId, currency);
 
-let trackingPixelUrl = client.getSignedTrackingPixelUrl({
-	transactionId: 'transactionId-' + Date.now(),
-	memberId: 'memberId',
-	currency: 'GBP',
-	orderTotal: 209.00,
-	itemsUNiDAYSDiscount: 13.00,
-	code: 'ABC123',
-	itemsTax: 34.50,
-	shippingGross: 5.00,
-	shippingDiscount: 3.00,
-	itemsGross: 230.00,
-	itemsOtherDiscount: 10.00,
-	UNiDAYSDiscountPercentage: 10.00,
-	newCustomer: true
-}, '{YourCustomerSecret}');
+// Create an object containing the remaining corresponding transaction details
+var redemption = {
+    orderTotal: 209.00,
+    itemsUNiDAYSDiscount: 13.00,
+    code: 'ABC123',
+    itemsTax: 34.50,
+    shippingGross: 5.00,
+    shippingDiscount: 3.00,
+    itemsGross: 230.00,
+    itemsOtherDiscount: 10.00,
+    UNiDAYSDiscountPercentage: 10.00,
+    newCustomer: true
+};
 
+// Pass this object into the getTrackingScriptUrl method.
+var trackingServerUrl = client.getTrackingScriptUrl(redemption);
+
+// You now have a URL which can be used in script element to call the API.
 ```
 
-### Codeless Client
+### Get Signed Tracking Script URL
+
+This is known as our signed client-to-server integration.
+
+#### Making the call
+
+The method to get the signed URL to make a client-to-server request with is `getSignedTrackingScriptUrl()`. To implement this method you first need to ensure that you have access to all required transaction details.
+
+Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments (`RedemptionClient(partnerId, currency, transactionId)`) and call `.getSignedTrackingScriptUrl(redemption, key)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API, and the `key` is your signing key as provided by UNiDAYS.
+
+#### Return
+
+A signed URL will be returned to you, which can then be used to call the UNiDAYS Tracking API.
 
 #### Example
+
 ```javascript
 
 "use strict";
@@ -213,25 +174,204 @@ let trackingPixelUrl = client.getSignedTrackingPixelUrl({
 const UNiDAYS = require('../lib/index.js'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
+// UNiDAYS will provide your partnerId and signingKey.
+var partnerId = '0LTio6iVNaKj861RM9azJQ==',
+    signingKey = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
 
-// Initialise a new UNiDAYS client with the customerSecret provided to you during the setup process
-let client = new Codeless('{YourCustomerSecret}');
+// These must be based on the real values of the transaction
+var transactionId = 'Order123',
+    currency = 'GBP';
 
-// Get a hash from studentId & timestamp
-client.hash(studentId, timestamp)
+// Create a reference to the RedemptionClient object, passing in your partnerId, transactionId and currency.
+var client = new RedemptionClient(partnerId, transactionId, currency);
 
-//Validate hash
-validHash = client.validate(studentId, timestamp, hash)
+// Create an object containing the remaining corresponding transaction details
+var redemption = {
+    orderTotal: 209.00,
+    itemsUNiDAYSDiscount: 13.00,
+    code: 'ABC123',
+    itemsTax: 34.50,
+    shippingGross: 5.00,
+    shippingDiscount: 3.00,
+    itemsGross: 230.00,
+    itemsOtherDiscount: 10.00,
+    UNiDAYSDiscountPercentage: 10.00,
+    newCustomer: true
+};
 
+// Pass this object into the getSignedTrackingScriptUrl method, along with your signing key.
+var trackingServerUrl = client.getSignedTrackingScriptUrl(redemption, signingKey);
+
+// You now have a signed URL which can be used in a script element to call the API.
+```
+
+### Get Tracking Server URL
+
+This is known as our server-to-server integration.
+Note: Request signing for server-to-server integrations is mandatory.
+
+#### Making the call
+
+The method to get the signed URL to make a server-to-server request with is `getTrackingServerUrl()`. To implement this method you first need to ensure that you have access to all required transaction details.
+
+Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments (`RedemptionClient(partnerId, currency, transactionId)`) and call `.getTrackingServerUrl(redemption, key)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API, and the `key` is your signing key as provided by UNiDAYS.
+
+#### Return
+
+A signed URL will be returned to you, which can then be used to call the UNiDAYS Tracking API.
+
+#### Example
+
+```javascript
+
+"use strict";
+
+const UNiDAYS = require('../lib/index.js'),
+      RedemptionClient = UNiDAYS.RedemptionClient;
+
+// UNiDAYS will provide your partnerId and signingKey.
+var partnerId = '0LTio6iVNaKj861RM9azJQ==',
+    signingKey = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+
+// These must be based on the real values of the transaction
+var transactionId = 'Order123',
+    currency = 'GBP';
+
+// Create a reference to the RedemptionClient object, passing in your partnerId, transactionId and currency.
+var client = new RedemptionClient(partnerId, transactionId, currency);
+
+// Create an object containing the remaining corresponding transaction details
+var redemption = {
+    orderTotal: 209.00,
+    itemsUNiDAYSDiscount: 13.00,
+    code: 'ABC123',
+    itemsTax: 34.50,
+    shippingGross: 5.00,
+    shippingDiscount: 3.00,
+    itemsGross: 230.00,
+    itemsOtherDiscount: 10.00,
+    UNiDAYSDiscountPercentage: 10.00,
+    newCustomer: true
+};
+
+// Pass this object into the getTrackingServerUrl method, along with your signing key.
+var trackingServerUrl = client.getTrackingServerUrl(redemption, signingKey);
+
+// You now have a signed URL which can be used to call the API directly.
+```
+
+### Record Redemption
+
+The underlying implementation of `recordRedemption` uses node-fetch to call the UNiDAYS Tracking API and returns a promise confirming the successful recording with a HTTP 200 status, or a 4xx error detailing issues with the request. See https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API for more information.
+
+#### Example
+
+```javascript
+
+"use strict";
+
+const UNiDAYS = require('../lib/index.js'),
+      RedemptionClient = UNiDAYS.RedemptionClient;
+
+// UNiDAYS will provide your partnerId and signingKey.
+var partnerId = '0LTio6iVNaKj861RM9azJQ==',
+    signingKey = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+
+// These must be based on the real values of the transaction
+var transactionId = 'Order123',
+    currency = 'GBP';
+
+// Create a reference to the RedemptionClient object, passing in your partnerId, transactionId and currency.
+var client = new RedemptionClient(partnerId, transactionId, currency);
+
+// Create an object containing the remaining corresponding transaction details
+var redemption = {
+    orderTotal: 209.00,
+    itemsUNiDAYSDiscount: 13.00,
+    code: 'ABC123',
+    itemsTax: 34.50,
+    shippingGross: 5.00,
+    shippingDiscount: 3.00,
+    itemsGross: 230.00,
+    itemsOtherDiscount: 10.00,
+    UNiDAYSDiscountPercentage: 10.00,
+    newCustomer: true
+};
+
+// Pass this object into the recordRedemption method, along with your signing key.
+client.recordRedemption(redemption, signingKey)
+      .then(res => {
+          if (!res.ok) {
+              let error = new Error(res.statusText);
+              error.result = res;
+              throw error;
+          }
+      }).catch(err => {
+          // The response will detail errors with the request.
+          if (err.result)
+              err.result.json().then(json => console.log(json));
+      });
+
+// The method has built the request and performed a request to our API directly.
 ```
 
 ### Test endpoint
 
-To record test redemptions during development pass in { testMode:true } as a 3rd optional argument. The rest of the code example should remain the same. This will not record a live redemption.
+To record test redemptions during development, pass in `{ testMode:true }` as a 3rd optional argument. The rest of the code example should remain the same. This will not record a live redemption.
 
 #### Example
+
+```javascript
+var client = new RedemptionClient(partnerId, transactionId, currency, { testMode: true });
+```
+
+
+
+
+## Codeless Verification
+
+### Codeless API
+
+If you have agreed to provide UNiDAYS Members with a codeless experience, alongside direct tracking, you will also need to implement the 'Codeless API' which will assist you with parsing and validating the signed traffic we direct towards your site.
+
+#### Making the call
+
+First call the CodelessClient with the key provided to you by UNiDAYS (`new CodelessClient(key)`). Then call the `validate(ud_s, ud_t, ud_h)` method with the values for ud_s, ud_t and ud_h as the arguments.
+
+- `ud_s` = The Member ID for the UNiDAYS member.
+- `ud_t` = The timestamp of the request.
+- `ud_h` = A SHA512 hash of the above parameters.
+
+#### Return
+
+If the method successfully validates the hash of the incoming request, a DateTime for the request will be returned; else null will be returned.
+
+#### Example
+
 ```javascript
 
-let client = new RedemptionClient('{YourPartnerId}', '{YourTransactionId}', '{CurrencyISO}', { testMode: true }); 
+"use strict";
 
+const UNiDAYS = require('../lib/index.js'),
+      CodelessClient = UNiDAYS.CodelessClient;
+
+// UNiDAYS will provide your key.
+var key = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+
+// Initialise a new UNiDAYS Codeless Client with the provided signing key.
+var client = new CodelessClient(key);
+
+// Get a hash from studentId (ud_s) & timestamp (ud_t)
+var hash = client.hash(ud_s, ud_t)
+
+//Validate hash
+var validHash = client.validate(ud_s, ud_t, hash)
+
+// validate will return the dateTime of the request if it is valid, else null.
 ```
+
+## Contributing
+
+This project is set up as an open source project. As such, if there any any suggestions you have for features, for improving the code itself or come across any problems, you can raise them and / or suggest changes in implementation.
+
+If you are interested in contributing to this codebase, please follow the [contributing guidelines](./.github/contributing.md). This contains guides on both contributing directly and raising feature requests or bug reports. Please adhere to our [code of conduct](./CODE_OF_CONDUCT.md) when doing any of the above.
