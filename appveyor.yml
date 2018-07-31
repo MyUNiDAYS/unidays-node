@@ -1,0 +1,29 @@
+version: 1.0.{build}-{branch}
+branches:
+  only:
+    - master
+skip_tags: true
+max_jobs: 1
+init:
+  - git config --global core.autocrlf true
+#------ tests configuration ------#
+environment:
+  matrix:
+    - nodejs_version: '8'
+    - nodejs_version: '6'
+install:
+  - npm install
+test_script:
+  - npm test
+build: off
+#---- deployment configuration ----#
+deploy_script:
+  - ps: |
+      if ($ENV:CONFIGURATION -eq "publish")
+      {
+        "//registry.npmjs.org/:_authToken=`$`{NPM_TOKEN`}" | Out-File (Join-Path $ENV:APPVEYOR_BUILD_FOLDER ".npmrc") -Encoding UTF8
+        iex "npm pack"
+        iex "npm publish"
+      }
+    on:
+      branch: master
