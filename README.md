@@ -326,9 +326,6 @@ To record test redemptions during development, pass in `{ testMode:true }` as a 
 var client = new RedemptionClient(partnerId, transactionId, currency, { testMode: true });
 ```
 
-
-
-
 ## Codeless Verification
 
 ### Codeless API
