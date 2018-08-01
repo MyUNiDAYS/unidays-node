@@ -206,7 +206,7 @@ describe('RedemptionClient', () => {
         });
 
         it('should return a valid tracking script url', () => {
-            var trackingScriptUrl = client.getTrackingScriptUrl({
+            let trackingScriptUrl = client.getTrackingScriptUrl({
                 memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
@@ -239,7 +239,7 @@ describe('RedemptionClient', () => {
         });
 
         it('should return a valid tracking script url', () => {
-            var trackingScriptUrl = client.getTrackingScriptUrl({
+            let trackingScriptUrl = client.getTrackingScriptUrl({
                 memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
@@ -273,7 +273,7 @@ describe('RedemptionClient', () => {
         });
 
         it('should return a valid tracking script url', () => {
-            var trackingScriptUrl = client.getSignedTrackingScriptUrl({
+            let trackingScriptUrl = client.getSignedTrackingScriptUrl({
                 memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
@@ -300,7 +300,7 @@ describe('RedemptionClient', () => {
         });
 
         it('should return a valid test tracking script url', () => {
-            var trackingScriptUrl = client.getSignedTrackingScriptUrl({
+            let trackingScriptUrl = client.getSignedTrackingScriptUrl({
                 memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
@@ -333,7 +333,7 @@ describe('RedemptionClient', () => {
         });
 
         it('should return a valid server tracking url', () => {
-            var trackingPixelUrl = client.getTrackingServerUrl({
+            let trackingPixelUrl = client.getTrackingServerUrl({
                 memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
@@ -359,7 +359,7 @@ describe('RedemptionClient', () => {
         })
 
         it('should return a valid test server tracking url', () => {
-            var trackingPixelUrl = client.getTrackingServerUrl({
+            let trackingPixelUrl = client.getTrackingServerUrl({
                 memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
