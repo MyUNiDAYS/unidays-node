@@ -1,29 +1,65 @@
-version: 1.0.{build}-{branch}
-branches:
-  only:
-    - master
-skip_tags: true
-max_jobs: 1
-init:
-  - git config --global core.autocrlf true
-#------ tests configuration ------#
-environment:
-  matrix:
-    - nodejs_version: '8'
-    - nodejs_version: '6'
-install:
-  - npm install
-test_script:
-  - npm test
-build: off
-#---- deployment configuration ----#
-deploy_script:
-  - ps: |
-      if ($ENV:CONFIGURATION -eq "publish")
-      {
-        "//registry.npmjs.org/:_authToken=`$`{NPM_TOKEN`}" | Out-File (Join-Path $ENV:APPVEYOR_BUILD_FOLDER ".npmrc") -Encoding UTF8
-        iex "npm pack"
-        iex "npm publish"
-      }
-    on:
-      branch: master
+# master
+-
+  branches:
+    only:
+      - master
+      
+  skip_tags: true
+
+  version: 1.0.0
+   
+  init:
+    - git config --global core.autocrlf true
+  
+  environment:
+    matrix:
+      - nodejs_version: '8'
+  
+  install:
+    - npm install
+    - ps: '"//registry.npmjs.org/:_authToken=$env:npm_token`n" | out-file "$env:userprofile\.npmrc" -Encoding ASCII'
+    - npm whoami
+
+  build_script:
+    - npm pack
+    
+  test_script:
+    - npm test
+   
+  on_failure:
+    - ps: Update-AppveyorBuild -Version "$($env:appveyor_build_version)-fail-$(Get-Date -format dd_mm_yyyy_HH_mm_ss)"
+
+  on_success:
+    - npm publish --access public
+
+# all branches except master
+-
+  branches:
+    except:
+      - master
+      
+  skip_tags: true
+
+  version: 1.0.{build}-{branch}
+   
+  init:
+    - git config --global core.autocrlf input
+  
+  environment:
+    matrix:
+       - nodejs_version: '8'
+       - nodejs_version: '6'
+
+  install:
+    - npm install
+    - ps: '"//registry.npmjs.org/:_authToken=$env:npm_token`n" | out-file "$env:userprofile\.npmrc" -Encoding ASCII'
+    - npm whoami
+
+  build_script:
+    - npm pack
+    
+  test_script:
+    - npm test
+   
+  on_failure:
+    - ps: Update-AppveyorBuild -Version "$($env:appveyor_build_version)-fail-$(Get-Date -format dd_mm_yyyy_HH_mm_ss)"

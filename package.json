@@ -1,7 +1,7 @@
 {
-	"name": "unidays.tracking",
-	"version": "1.1.0",
-	"description": "Codeless API url signing and verification and Code based API to record redemptions",
+	"name": "unidays-node",
+	"version": "1.0.0",
+	"description": "This is the NodeJS library for integrating with UNiDAYS. This is to be used for coded and codeless integrations. The following documentation provides descriptions of the implementations and examples.",
 	"main": "index.js",
 	"scripts": {
 		"test": "mocha"
