@@ -1,6 +1,6 @@
 {
 	"name": "unidays-node",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "This is the NodeJS library for integrating with UNiDAYS. This is to be used for coded and codeless integrations. The following documentation provides descriptions of the implementations and examples.",
 	"main": "index.js",
 	"scripts": {
@@ -10,7 +10,7 @@
 	"license": "ISC",
 	"devDependencies": {
 		"fetch-mock": "^5.9.4",
-		"mocha": "^3.2.0"
+		"mocha": "^5.2.0"
 	},
 	"dependencies": {
 		"node-fetch": "^1.6.3"
