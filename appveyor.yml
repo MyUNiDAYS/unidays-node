@@ -1,67 +1,37 @@
-# master
--
-  branches:
-    only:
-      - master
-  
-  skip_branch_with_pr: true    
-  
-  skip_tags: true
+version: 1.0.{build}  
+init:
+  - git config --global core.autocrlf true
+skip_branch_with_pr: true
+skip_tags: true
+environment:
+  matrix:
+    - nodejs_version: '8'
+install:
+  - npm install
+build_script:
+  - npm pack
+artifacts:
+  - path: '**\*.tgz'
+    name: npm
+test_script:
+  - npm test
+on_failure:
+  - ps: Update-AppveyorBuild -Version "$($env:appveyor_build_version)-fail-$(Get-Date -format dd_mm_yyyy_HH_mm_ss)"
 
-  version: 1.0.2
-   
-  init:
-    - git config --global core.autocrlf true
-  
-  environment:
-    matrix:
-      - nodejs_version: '8'
-  
-  install:
-    - npm install
-    - ps: '"//registry.npmjs.org/:_authToken=$env:npm_token`n" | out-file "$env:userprofile\.npmrc" -Encoding ASCII'
-    - npm whoami
-
-  build_script:
-    - npm pack
-    
-  test_script:
-    - npm test
-   
-  on_failure:
-    - ps: Update-AppveyorBuild -Version "$($env:appveyor_build_version)-fail-$(Get-Date -format dd_mm_yyyy_HH_mm_ss)"
-
-  on_success:
-    - npm publish --access public
+for:
+  - branches:
+      only:
+        - master
+    install:
+      - ps: '"//registry.npmjs.org/:_authToken=$env:npm_token`n" | out-file "$env:userprofile\.npmrc" -Encoding ASCII'
+      - npm whoami
+    on_success:
+       - npm publish --access public
 
 # all branches except master
--
-  branches:
-    except:
-      - master
-      
-  skip_tags: true
-
-  version: 1.0.{build}-{branch}
-   
-  init:
-    - git config --global core.autocrlf input
-  
-  environment:
-    matrix:
-       - nodejs_version: '8'
-       - nodejs_version: '6'
-
-  install:
-    - npm install
-    - ps: '"//registry.npmjs.org/:_authToken=$env:npm_token`n" | out-file "$env:userprofile\.npmrc" -Encoding ASCII'
-    - npm whoami
-
-  build_script:
-    - npm pack
-    
-  test_script:
-    - npm test
-   
-  on_failure:
-    - ps: Update-AppveyorBuild -Version "$($env:appveyor_build_version)-fail-$(Get-Date -format dd_mm_yyyy_HH_mm_ss)"
+  - branches:
+      except:
+        - master
+    environment:
+      matrix:
+         - nodejs_version: '6'
