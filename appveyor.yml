@@ -23,6 +23,7 @@
     - npm whoami
 
   build_script:
+    - npm version %APPVEYOR_BUILD_VERSION% -m 'v%APPVEYOR_BUILD_VERSION%'
     - npm pack
     
   test_script:
@@ -58,6 +59,7 @@
     - npm whoami
 
   build_script:
+    - npm version %APPVEYOR_BUILD_VERSION% -m 'v%APPVEYOR_BUILD_VERSION%'
     - npm pack
     
   test_script:
