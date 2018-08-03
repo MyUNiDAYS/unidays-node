@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require('assert'),
-    RedemptionClient = require('../lib/index.js').RedemptionClient,
+    RedemptionClient = require('../index.js').RedemptionClient,
     fetchMock = require('fetch-mock'),
     querystring = require('querystring');
 
