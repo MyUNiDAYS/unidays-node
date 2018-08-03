@@ -53,6 +53,14 @@
     matrix:
        - nodejs_version: '8'
        - nodejs_version: '6'
+
+  install:
+    - npm install
+    - ps: '"//registry.npmjs.org/:_authToken=$env:npm_token`n" | out-file "$env:userprofile\.npmrc" -Encoding ASCII'
+    - npm whoami
+
+  build_script:
+    - npm pack
     
   test_script:
     - npm test
