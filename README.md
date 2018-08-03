@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/assets/UNiDAYS_Logo.png" />
+  <img src="./assets/UNiDAYS_Logo.png" />
 </p>
 <br/>
 
@@ -32,7 +32,7 @@ This is the NodeJS library for integrating with UNiDAYS. This is to be used for 
 
 ## How to use this code
 
-- Pull the package from [npm]().
+- Pull the package from [npm](https://www.npmjs.com/package/unidays-node).
 - See the example usage section for the type of call you intend to use. Each of these contains an example.
 
 ## Direct Tracking
@@ -119,7 +119,7 @@ A URL will be returned to you, which can then be used to call the UNiDAYS Tracki
 
 "use strict";
 
-const UNiDAYS = require('../lib/index.js'),
+const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
 // UNiDAYS will provide your partnerId.
@@ -172,7 +172,7 @@ A signed URL will be returned to you, which can then be used to call the UNiDAYS
 
 "use strict";
 
-const UNiDAYS = require('../lib/index.js'),
+const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
 // UNiDAYS will provide your partnerId and signingKey.
@@ -227,7 +227,7 @@ A signed URL will be returned to you, which can then be used to call the UNiDAYS
 
 "use strict";
 
-const UNiDAYS = require('../lib/index.js'),
+const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
 // UNiDAYS will provide your partnerId and signingKey.
@@ -271,7 +271,7 @@ The underlying implementation of `recordRedemption` uses node-fetch to call the 
 
 "use strict";
 
-const UNiDAYS = require('../lib/index.js'),
+const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
 // UNiDAYS will provide your partnerId and signingKey.
@@ -352,7 +352,7 @@ If the method successfully validates the hash of the incoming request, a DateTim
 
 "use strict";
 
-const UNiDAYS = require('../lib/index.js'),
+const UNiDAYS = require('unidays-node'),
       CodelessClient = UNiDAYS.CodelessClient;
 
 // UNiDAYS will provide your key.

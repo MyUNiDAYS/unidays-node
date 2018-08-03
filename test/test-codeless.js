@@ -1,5 +1,5 @@
 const assert = require('assert'),
-    Codeless = require('../lib/codeless.js');
+    Codeless = require('../index.js').CodelessClient;
 
 const sharedSecret = 'tnFUmqDkq1w9eT65hF9okxL1On+d2BQWUyOFLYE3FTOwHjmnt5Sh/sxMA3/i0od3pV5EBfSAmXo//fjIdAE3cIAatX7ZZqVi0Dr8qEYGtku+ZRVbPSmTcEUTA/gXYo3KyL2JqXaZ/qhUvCMbLWyV07qRiFOjyLdOWhioHlJM5io=',
     studentId = 'Do/faqh330SGgCnn4t3X4g==',
