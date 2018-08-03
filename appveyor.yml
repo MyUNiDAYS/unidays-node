@@ -4,11 +4,11 @@
     only:
       - master
   
-  skip_branch_with_pr: true    
+  skip_branch_with_pr: true
   
   skip_tags: true
 
-  version: 1.0.2
+  version: 1.0.{build}
    
   init:
     - git config --global core.autocrlf true
@@ -41,6 +41,8 @@
       - master
       
   skip_tags: true
+  
+  skip_branch_with_pr: true
 
   version: 1.0.{build}-{branch}
    
