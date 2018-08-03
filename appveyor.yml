@@ -24,6 +24,10 @@
 
   build_script:
     - npm pack
+  
+  artifacts:
+    - path: '**\*.npmrc'
+      name: npm
     
   test_script:
     - npm test
@@ -61,6 +65,10 @@
 
   build_script:
     - npm pack
+  
+  artifacts:
+    - path: '**\*.npmrc'
+      name: npm
     
   test_script:
     - npm test
