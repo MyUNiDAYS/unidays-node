@@ -143,12 +143,12 @@ describe('RedemptionClient', () => {
         it('should serialise a full redemption correctly', () => {
             let qs = client._toQueryString(redemption);
 
-            assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
+            assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
         });
 
-        it('should return lowercase encoded characters', () => {
+        it('should return uppercase encoded characters', () => {
             let qs = client._toQueryString(redemption);
-            assert(qs.includes('&TransactionId=transaction%2fId'));
+            assert(qs.includes('&TransactionId=transaction%2FId'));
         });
 
         it('should serialise numbers to 2dp', () => {
@@ -187,7 +187,7 @@ describe('RedemptionClient', () => {
         it('should serialise a full redemption without undefined parameters', () => {
             let qs = client._toQueryString(redemption);
 
-            assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
+            assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2FId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
         });
     });
 
@@ -220,7 +220,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             });
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true');
+            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true');
         });
     });
 
@@ -253,7 +253,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             });
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Test=True');
+            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Test=True');
         });
     });
 
@@ -287,7 +287,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=J7zpDfftsTBvLZ5n23HfbK71MsgYRZlhWF20K%2fF75%2bTdZkga1ErBj4HbgyzDMcnLo1lDMfCzoBwcB4OGsEc6Jw%3d%3d');
+            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
         });
     });
 
@@ -314,7 +314,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=J7zpDfftsTBvLZ5n23HfbK71MsgYRZlhWF20K%2fF75%2bTdZkga1ErBj4HbgyzDMcnLo1lDMfCzoBwcB4OGsEc6Jw%3d%3d&Test=True');
+            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
         });
     });
 
@@ -347,7 +347,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=J7zpDfftsTBvLZ5n23HfbK71MsgYRZlhWF20K%2fF75%2bTdZkga1ErBj4HbgyzDMcnLo1lDMfCzoBwcB4OGsEc6Jw%3d%3d');
+            assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
         });
     });
 
@@ -373,7 +373,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2fId&Currency=GBP&MemberId=memberId&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=J7zpDfftsTBvLZ5n23HfbK71MsgYRZlhWF20K%2fF75%2bTdZkga1ErBj4HbgyzDMcnLo1lDMfCzoBwcB4OGsEc6Jw%3d%3d&Test=True');
+            assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
         });
     })
 });
