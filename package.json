@@ -4,19 +4,19 @@
   "description": "This is the NodeJS library for integrating with UNiDAYS. This is to be used for coded and codeless integrations. The following documentation provides descriptions of the implementations and examples.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ./node_modules/.bin/ava -v",
+    "test": "node ./node_modules/mocha/bin/mocha",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "standard": "standard index.js"
   },
   "author": "UNiDAYS",
   "license": "ISC",
   "devDependencies": {
-    "fetch-mock": "^5.9.4",
-    "mocha": "^5.2.0",
     "ava": "^0.16.0",
     "co-exec": "^1.0",
     "codecov": "^1.0.1",
+    "fetch-mock": "^5.9.4",
     "ghooks": "^1.2.4",
+    "mocha": "^5.2.0",
     "nyc": "^10.0.0",
     "standard": "^8.4.0"
   },
