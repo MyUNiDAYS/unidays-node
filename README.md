@@ -56,7 +56,7 @@ Having **either** Code or MemberID as a parameter is also mandatory:
 | code | The UNiDAYS discount code used | String | ABC123 |
 | memberId | Only to be provided if you are using a codeless integration | String | 0LTio6iVNaKj861RM9azJQ== |
 
-### Optional Parameters
+### Additional Parameters
 
 Note any of the following properties to which the value is unknown should be omitted from calls. Which of the following values you provide to us will depend on your agreed contract.
 
