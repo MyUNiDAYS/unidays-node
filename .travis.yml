@@ -2,7 +2,6 @@ sudo: false
 language: node_js
 node_js:
 - stable
-- "6"
 - "8"
 script:
 - npm install
@@ -14,3 +13,4 @@ deploy:
     secure: rojcjgAjAgiykWLuyuVFOdbK5RjPIbHgxUNi1cEDy1QPK3iPVJ+kCIlLLgbDgCId4H46FVi6WIF/XcsIMuywheZyGKZF5xBjhS/zavMQeRGH/sVWbPkJLbKNGqGMjRVWH2JqBDnzS+uOhrV83A5nugS4NjLhZMwwR0bNyqNTNmXsWxy0Bx5+oI00FH0aHuY6Y8WnrJDOT8LC64+Vf2SceJ3mWHzuiWXuU1WyBnM8oRTAgluwYAUhMpQkPdzb9m8RlER0LecxZ9Yj3tYvQ333XDdmk3wTY4zMVmOXSRAqsvKhHGA0TBzB025Q88kQ/tOwIOzN6R91BORtIwMpKHYlEAhSHETiD19N6c/3t1CbTu8yeluNUCTwQQLtXLPhMeFDFcRNqaABQlGEPgumMWLHSZa9dKXGzues5LTKgg1wqtO+ZsOFdtmvHvYHjNtIkQHDC5jZcMrBf8KXYBIl23b3JME1I5L6I3uIW82BzVo1rRng9nDPnWcoTw+ypkyAMCFQdHYi/7icq0bmwfVNgP4NX2YfeY9RFpXFJ+mnGFuu+7oB3k1PH2G29o9kZQ/nsX17x+HqFmRq9l6N7rYU6EaJtMIUtZbSYlNwi1YMPayGcBVFTF8zQPtg7vnyiaVdMGTVYkVmI4XeiWOIdxHSads4GwUULhuU1f501V0/6zUcMyU=
   on:
     branch: master
+    node: 'stable'
