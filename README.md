@@ -3,7 +3,7 @@
 </p>
 <br/>
 
-[![Build status](https://ci.appveyor.com/api/projects/status/xjfdbra2ea85qd27/branch/master?svg=true)](https://ci.appveyor.com/project/UNiDAYS/unidays-node/branch/master)
+[![Build Status](https://travis-ci.org/MyUNiDAYS/unidays-node.svg?branch=master)](https://travis-ci.org/MyUNiDAYS/unidays-node)
 [![npm version](https://badge.fury.io/js/unidays-node.svg)](https://badge.fury.io/js/unidays-javascript)
 
 # UNiDAYS NodeJS Library
