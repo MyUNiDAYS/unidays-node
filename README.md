@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="./assets/UNiDAYS_Logo.png" />
+  <img src="/assets/UNiDAYS_Logo.png" />
 </p>
 <br/>
 
 [![Build Status](https://travis-ci.org/MyUNiDAYS/unidays-node.svg?branch=master)](https://travis-ci.org/MyUNiDAYS/unidays-node)
-[![npm version](https://badge.fury.io/js/unidays-node.svg)](https://badge.fury.io/js/unidays-javascript)
+[![npm version](https://badge.fury.io/js/unidays-node.svg)](https://badge.fury.io/js/unidays-node)
 
 # UNiDAYS NodeJS Library
 
