@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/UNIDAYS_Logo.png" />
+  <img src="/assets/UNiDAYS_Logo.png" />
 </p>
 <br/>
 
