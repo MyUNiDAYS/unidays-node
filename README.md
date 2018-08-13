@@ -39,7 +39,7 @@ This is the NodeJS library for integrating with UNiDAYS. This is to be used for 
 
 ### Parameters
 
-Here is a description of all the available parameters. Which of these you provide to us are dependant on the agreed contract.
+Here is a description of all available parameters. Which of these you provide are dependant on the agreed contract.
 
 ### Mandatory Parameters
 
@@ -105,9 +105,9 @@ This is known as our client-to-server integration.
 
 #### Making the call
 
-The method to get the URL to make a client-to-server request with is `getTrackingScriptUrl()`. To implement this method you first need to ensure that you have access to all required transaction details.
+The method to get the URL to make a client-to-server request with is `getTrackingScriptUrl()`. To implement this method, you first need to ensure that you have access to all required transaction details.
 
-Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments (`RedemptionClient(partnerId, currency, transactionId)`) and call `.getTrackingScriptUrl(redemption)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API.
+Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments `new RedemptionClient(partnerId, currency, transactionId)` and call `.getTrackingScriptUrl(redemption)` where the `redemption` is an object containing the transaction details you are required to send to UNiDAYS.
 
 #### Return
 
@@ -158,9 +158,9 @@ This is known as our signed client-to-server integration.
 
 #### Making the call
 
-The method to get the signed URL to make a client-to-server request with is `getSignedTrackingScriptUrl()`. To implement this method you first need to ensure that you have access to all required transaction details.
+The method to get the signed URL to make a client-to-server request with is `getSignedTrackingScriptUrl()`. To implement this method, you first need to ensure that you have access to all required transaction details.
 
-Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments (`RedemptionClient(partnerId, currency, transactionId)`) and call `.getSignedTrackingScriptUrl(redemption, key)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API, and the `key` is your signing key as provided by UNiDAYS.
+Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments `new RedemptionClient(partnerId, currency, transactionId)` and call `.getSignedTrackingScriptUrl(redemption, key)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API, and the `key` is your signing key as provided by UNiDAYS.
 
 #### Return
 
@@ -215,7 +215,7 @@ Note: Request signing for server-to-server integrations is mandatory.
 
 The method to get the signed URL to make a server-to-server request with is `getTrackingServerUrl()`. To implement this method you first need to ensure that you have access to all required transaction details.
 
-Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments (`RedemptionClient(partnerId, currency, transactionId)`) and call `.getTrackingServerUrl(redemption, key)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API, and the `key` is your signing key as provided by UNiDAYS.
+Once you have access to this transaction information, create a RedemptionClient object, providing the mandatory parameters as arguments `new RedemptionClient(partnerId, currency, transactionId)` and call `.getTrackingServerUrl(redemption, key)` where the `redemption` is an object containing the transaction details you are required to send to the UNiDAYS Tracking API, and the `key` is your signing key as provided by UNiDAYS.
 
 #### Return
 
@@ -313,12 +313,12 @@ client.recordRedemption(redemption, signingKey)
               err.result.json().then(json => console.log(json));
       });
 
-// The method has built the request and performed a request to our API directly.
+// The method has built and performed the request to our API directly.
 ```
 
 ### Test endpoint
 
-To record test redemptions during development, pass in `{ testMode:true }` as a 3rd optional argument. The rest of the code example should remain the same. This will not record a live redemption.
+To record test redemptions during development, pass in `{ testMode:true }` as a 3rd optional argument when instantiating the `RedemptionClient` object. The rest of the code example should remain the same. This will not record a live redemption.
 
 #### Example
 
@@ -334,7 +334,7 @@ If you have agreed to provide UNiDAYS Members with a codeless experience, alongs
 
 #### Making the call
 
-First call the CodelessClient with the key provided to you by UNiDAYS (`new CodelessClient(key)`). Then call the `validate(ud_s, ud_t, ud_h)` method with the values for ud_s, ud_t and ud_h as the arguments.
+First call the CodelessClient with the key provided to you by UNiDAYS `new CodelessClient(key)`. Then call the `validate(ud_s, ud_t, ud_h)` method with the values for ud_s, ud_t and ud_h as the arguments.
 
 | Parameter | Description | Data Type | Max Length | Example |
 |---|---|---|---|---|
@@ -372,6 +372,6 @@ var validHash = client.validate(ud_s, ud_t, hash)
 
 ## Contributing
 
-This project is set up as an open source project. As such, if there any any suggestions you have for features, for improving the code itself or come across any problems, you can raise them and / or suggest changes in implementation.
+This project is set up as an open source project. As such, if there any any suggestions you have for features, for improving the code itself, or come across any problems; you can raise them and / or suggest changes in implementation.
 
 If you are interested in contributing to this codebase, please follow the [contributing guidelines](./.github/contributing.md). This contains guides on both contributing directly and raising feature requests or bug reports. Please adhere to our [code of conduct](./CODE_OF_CONDUCT.md) when doing any of the above.
