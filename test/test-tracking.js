@@ -45,7 +45,7 @@ describe('RedemptionClient', () => {
         before(() => {
             mock = fetchMock.sandbox();
             mock
-                .post(/.*\/v1\.2\/redemption\?.*/, 'endpoint')
+                .post(/.*\/tracking\/v1\.2\/redemption\?.*/, 'endpoint')
                 .catch(404);
             client = new RedemptionClient('partnerId', 'transactionId', 'GBP', {
                 fetch: mock
@@ -220,7 +220,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             });
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true');
         });
     });
 
@@ -253,7 +253,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             });
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Test=True');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Test=True');
         });
     });
 
@@ -287,7 +287,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
         });
     });
 
@@ -314,7 +314,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingScriptUrl, 'https://tracking.myunidays.com/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
         });
     });
 
@@ -347,7 +347,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
+            assert.strictEqual(trackingPixelUrl, 'https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
         });
     });
 
@@ -373,7 +373,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingPixelUrl, 'https://tracking.myunidays.com/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
+            assert.strictEqual(trackingPixelUrl, 'https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
         });
     })
 });
