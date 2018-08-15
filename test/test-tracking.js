@@ -143,7 +143,7 @@ describe('RedemptionClient', () => {
         it('should serialise a full redemption correctly', () => {
             let qs = client._toQueryString(redemption);
 
-            assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true'));
+            assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True'));
         });
 
         it('should return uppercase encoded characters', () => {
@@ -169,11 +169,11 @@ describe('RedemptionClient', () => {
         let client;
         let redemption;
         before(() => {
-            client = new RedemptionClient('partnerId', 'transaction/Id', 'GBP');
+            client = new RedemptionClient('a partner Id', 'the transaction id', 'GBP');
             redemption = {
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
-                code: 'ABC123',
+                code: 'a code',
                 itemsTax: 34.50,
                 shippingGross: 5.00,
                 shippingDiscount: 3.00,
@@ -187,7 +187,7 @@ describe('RedemptionClient', () => {
         it('should serialise a full redemption without undefined parameters', () => {
             let qs = client._toQueryString(redemption);
 
-            assert(qs.includes('?PartnerId=partnerId&TransactionId=transaction%2FId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=false'));
+            assert(qs.includes('?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=a+code&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer='));
         });
     });
 
@@ -220,7 +220,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             });
 
-            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True');
         });
     });
 
@@ -253,16 +253,16 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             });
 
-            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Test=True');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True&Test=True');
         });
     });
 
     describe('#getSignedTrackingScriptUrl', () => {
         let client,
-            key = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+            key = 'AAAAAA==';
 
         before(() => {
-            client = new RedemptionClient('partnerId', 'transaction/Id', 'GBP');
+            client = new RedemptionClient('a partner Id', 'the transaction id', 'GBP');
         });
 
         it('should validate the redemption', () => {
@@ -274,10 +274,9 @@ describe('RedemptionClient', () => {
 
         it('should return a valid tracking script url', () => {
             let trackingScriptUrl = client.getSignedTrackingScriptUrl({
-                memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
-                code: 'ABC123',
+                code: 'a code',
                 itemsTax: 34.50,
                 shippingGross: 5.00,
                 shippingDiscount: 3.00,
@@ -287,24 +286,23 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=a+code&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True&Signature=c6sNwe3kcvr3%2FNYH%2B661%2F37BSP1RFIgrJ2LJ5e3ETOTD0kPBb6gzqvR8uEhFEJaksfBxy9Ct%2Frrn9%2F8fH0tuQQ%3D%3D');
         });
     });
 
     describe('#getTestSignedTrackingScriptUrl', () => {
         let client,
-            key = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+            key = 'AAAAAA==';
 
         before(() => {
-            client = new RedemptionClient('partnerId', 'transaction/Id', 'GBP', { testMode: true });
+            client = new RedemptionClient('a partner Id', 'the transaction id', 'GBP', { testMode: true });
         });
 
         it('should return a valid test tracking script url', () => {
             let trackingScriptUrl = client.getSignedTrackingScriptUrl({
-                memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
-                code: 'ABC123',
+                code: 'a code',
                 itemsTax: 34.50,
                 shippingGross: 5.00,
                 shippingDiscount: 3.00,
@@ -314,15 +312,15 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
+            assert.strictEqual(trackingScriptUrl, 'https://api.myunidays.com/tracking/v1.2/redemption/js?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=a+code&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True&Signature=c6sNwe3kcvr3%2FNYH%2B661%2F37BSP1RFIgrJ2LJ5e3ETOTD0kPBb6gzqvR8uEhFEJaksfBxy9Ct%2Frrn9%2F8fH0tuQQ%3D%3D&Test=True');
         });
     });
 
     describe('#getTrackingServerUrl', () => {
         let client,
-            key = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+            key = 'xCaiGms6eEcRYKqY7hXYPBLizZwY9Z2g/OqyOXa0r7lqZ8Npf78eK+rbnoplH7xCAab/0+h1zLYxfJm62GbgSHfnvjUGEOuh/MtHNALCoXD6Y3YWIrJnlEfym2kmWl7ZQoFyYbZXBTZq0SyCXJAI53ShKIcTPDBM3sNLm70IWns=';
         before(() => {
-            client = new RedemptionClient('partnerId', 'transaction/Id', 'GBP');
+            client = new RedemptionClient('a partner Id', 'the transaction id', 'GBP');
         })
 
         it('should validate the redemption', () => {
@@ -334,10 +332,9 @@ describe('RedemptionClient', () => {
 
         it('should return a valid server tracking url', () => {
             let trackingPixelUrl = client.getTrackingServerUrl({
-                memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
-                code: 'ABC123',
+                code: 'a code',
                 itemsTax: 34.50,
                 shippingGross: 5.00,
                 shippingDiscount: 3.00,
@@ -347,23 +344,22 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingPixelUrl, 'https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D');
+            assert.strictEqual(trackingPixelUrl, 'https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=a+code&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True&Signature=VsP%2B%2BN2PQ7Jy%2FhH6wjkVcGRLRkqpyBFyZPCLW7u0UYuXiYvBlggi4SgCQ1GPs5mg3JswBYms8qTwRehFpWhhAg%3D%3D');
         });
     });
 
     describe('#getTestTrackingServerUrl', () => {
         let client,
-            key = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+            key = 'xCaiGms6eEcRYKqY7hXYPBLizZwY9Z2g/OqyOXa0r7lqZ8Npf78eK+rbnoplH7xCAab/0+h1zLYxfJm62GbgSHfnvjUGEOuh/MtHNALCoXD6Y3YWIrJnlEfym2kmWl7ZQoFyYbZXBTZq0SyCXJAI53ShKIcTPDBM3sNLm70IWns=';
         before(() => {
-            client = new RedemptionClient('partnerId', 'transaction/Id', 'GBP', { testMode: true });
+            client = new RedemptionClient('a partner Id', 'the transaction id', 'GBP', { testMode: true });
         })
 
         it('should return a valid test server tracking url', () => {
             let trackingPixelUrl = client.getTrackingServerUrl({
-                memberId: 'memberId',
                 orderTotal: 209.00,
                 itemsUNiDAYSDiscount: 13.00,
-                code: 'ABC123',
+                code: 'a code',
                 itemsTax: 34.50,
                 shippingGross: 5.00,
                 shippingDiscount: 3.00,
@@ -373,7 +369,7 @@ describe('RedemptionClient', () => {
                 newCustomer: true
             }, key);
 
-            assert.strictEqual(trackingPixelUrl, 'https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=partnerId&TransactionId=transaction%2FId&MemberId=memberId&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=ABC123&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=true&Signature=TN%2FPlu3IBE%2FLnzc4JVLq60Z25JIk%2FhXf8jUZVLeAeE6%2BliyYzcdoAElyPtzRE6rDjsMWUhk5C1yJlOecwjLaxA%3D%3D&Test=True');
+            assert.strictEqual(trackingPixelUrl, 'https://api.myunidays.com/tracking/v1.2/redemption?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=a+code&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer=True&Signature=VsP%2B%2BN2PQ7Jy%2FhH6wjkVcGRLRkqpyBFyZPCLW7u0UYuXiYvBlggi4SgCQ1GPs5mg3JswBYms8qTwRehFpWhhAg%3D%3D&Test=True');
         });
     })
 });
