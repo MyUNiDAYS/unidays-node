@@ -16,27 +16,42 @@ This document outlines the different ways you can contribute to the UNiDAYS repo
 [How Can I Contribute?](#how-can-i-contribute)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
-  * [Check tests pass](#running-tests)
+  * [Labels For Issues](#labels-for-issues)
+  * [Running Tests](#running-tests)
   * [Pull Requests](#pull-requests)
   * [Your First Code Contribution](#your-first-code-contribution)
 
-[Styleguides](#styleguides)
+[Style Guides](#style-guides)
   * [Git Commit Messages](#git-commit-messages)
-  * [Documentation Styleguide](#css-styleguide)
+  * [JavaScript Style Guide](#javascript-style-guide)
+  * [Documentation Style Guide](#documentation-style-guide)
 
 ## How Can I Contribute?
 
-### Reporting Bugs :bug:
+### Reporting Bugs
 
-When issuing a bug report please include as many of details on [the bug report template](bug_report.md) as possible. If you find a Closed issue that seems like it is the same thing that you're experiencing, open a new issue and include a link to the original issue in the body of your new one. Please label the any bug report issues with `bug`.
+When issuing a bug report please include as many of details on [the bug report template](./ISSUE_TEMPLATE/bug_report.md) as possible. If you find a Closed issue that seems like it is the same thing that you're experiencing, open a new issue and include a link to the original issue in the body of your new one. Please label the any bug report issues with `bug`.
 
-### Suggesting Enhancements 🔎
+### Suggesting Enhancements
 
 Enhancements may include completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion and find related suggestions.
 
-First of all please do a search on the issues already present to see if it's an enhancement that hasn't previously been suggested. If it has, maybe join the discussion on the pre-existing issue. This is to help reduce duplication of issues. If it hasn't been raised previously, please include as many details as you can using [the feature request template](feature_request.md). Label the raised feature request as `enhancement`
+First of all please do a search on the issues already present to see if it's an enhancement that hasn't previously been suggested. If it has, maybe join the discussion on the pre-existing issue. This is to help reduce duplication of issues. If it hasn't been raised previously, please include as many details as you can using [the feature request template](./ISSUE_TEMPLATE/feature_request.md). Label the raised feature request as `enhancement`
 
-### Running tests :heavy_check_mark:
+### Labels For Issues
+
+| Label       | Purpose             |
+| ------------- |:----------------:|
+| up-for-grabs     | An issue that is ready and has enough information to be picked up  |
+| docs     | An issue that only relates to writing docs |
+| easy     | Difficulty level: any level of experience can pick this issue up |
+| medium     | Difficulty level: some experience of the domain or language will be needed to pick this issue up  |
+| hard     |Difficulty level: a lot of experience of the domain or language will be needed to pick this issue up |
+| insane     | Difficulty level: you need to be a total wizard to figure this out |
+| enhancement      | Making things better but without fixing an issue     |   
+| fix  | Fixing a pre-existing problem with the code      |
+
+### Running tests
 
 After pulling down the project, and before pushing to your branch, we would like for you to check that all the tests pass.
 
@@ -44,7 +59,7 @@ If you haven't already, run `npm install`
 
 The tests in this project are written in [mocha](https://mochajs.org/). As such, to run the tests type `npm test` into the terminal of your choice. It should run the tests and output the results.
 
-### Pull Requests :thought_balloon:
+### Pull Requests
 
 - Create branch. If there is an issue, have the branch name related to the linked issue, otherwise give it a descriptive name relating to what the work covers. See some examples below.
 
@@ -54,19 +69,19 @@ The tests in this project are written in [mocha](https://mochajs.org/). As such,
 | enhancement      | Making things _better_ but without fixing an issue     |   enhancement_improveperformanceofquery |
 | fix  | Fixing a pre-existing problem with the code that isn't an issue      | fix_acceptnullsforinput |
 
-- Open a Pull Request with the details listed in the [pull request template](pull_request_template.md). The sections of this template should show in the body of any new pull request automatically.
+- Open a Pull Request with the details listed in the [pull request template](../pull_request_template.md). The sections of this template should show in the body of any new pull request automatically.
 
-- Please ensure that any changes you make comply with our [styleguides](#styleguides).
+- Please ensure that any changes you make comply with our [style guides](#style-guides).
 
 -	Include screenshots and animated GIFs in your pull request whenever possible.
 
 - Make a comment with the pull request in any issues it relates to.
 
-### Your First Code Contribution? :computer:
+### Your First Code Contribution?
 
 We will make efforts to label issues with `beginner` if we think they should only require a few lines of code, and a test or two. This is in order to help those who want to contribute but don't necessarily have much experience in doing so.
 
-## Styleguides
+## Style Guides
 
 ### Git Commit Messages
 
@@ -79,7 +94,11 @@ We request that, where possible, you stick to the following format for your comm
 
 For reference, [this blog](https://chris.beams.io/posts/git-commit/) encourages a similar style.
 
-## Documentation Styleguide
+### JavaScript Style Guide
+
+A full and up to date JavaScript style guide with examples can be accessed [here](https://github.com/MyUNiDAYS/StyleGuide/tree/master/Javascript).
+
+## Documentation Style Guide
 
 For anything changing the user experience or externally visible implementation, please update the README.md as part of your pull request.
 
