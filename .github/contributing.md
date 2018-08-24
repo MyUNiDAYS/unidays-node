@@ -3,7 +3,7 @@
 </p>
 <br/>
 
-# UNiDAYS Contributors Guide.
+# UNiDAYS Contributors Guide
 
 :star: Thanks for taking the time to contribute :star:
 
@@ -17,13 +17,11 @@ This document outlines the different ways you can contribute to the UNiDAYS repo
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Labels For Issues](#labels-for-issues)
-  * [Running Tests](#running-tests)
   * [Pull Requests](#pull-requests)
   * [Your First Code Contribution](#your-first-code-contribution)
 
 [Style Guides](#style-guides)
   * [Git Commit Messages](#git-commit-messages)
-  * [JavaScript Style Guide](#javascript-style-guide)
   * [Documentation Style Guide](#documentation-style-guide)
 
 ## How Can I Contribute?
@@ -40,42 +38,34 @@ First of all please do a search on the issues already present to see if it's an 
 
 ### Labels For Issues
 
-| Label       | Purpose             |
-| ------------- |:----------------:|
-| up-for-grabs     | An issue that is ready and has enough information to be picked up  |
-| docs     | An issue that only relates to writing docs |
-| easy     | Difficulty level: any level of experience can pick this issue up |
-| medium     | Difficulty level: some experience of the domain or language will be needed to pick this issue up  |
-| hard     |Difficulty level: a lot of experience of the domain or language will be needed to pick this issue up |
-| insane     | Difficulty level: you need to be a total wizard to figure this out |
-| enhancement      | Making things better but without fixing an issue     |   
-| fix  | Fixing a pre-existing problem with the code      |
-
-### Running tests
-
-After pulling down the project, and before pushing to your branch, we would like for you to check that all the tests pass.
-
-If you haven't already, run `npm install`
-
-The tests in this project are written in [mocha](https://mochajs.org/). As such, to run the tests type `npm test` into the terminal of your choice. It should run the tests and output the results.
+| Label | Purpose |
+| --- |--- |
+| up-for-grabs | An issue that is ready and has enough information to be picked up |
+| docs | An issue that only relates to writing docs |
+| easy | Difficulty level: any level of experience can pick this issue up |
+| medium | Difficulty level: some experience of the domain or language will be needed to pick this issue up |
+| hard |Difficulty level: a lot of experience of the domain or language will be needed to pick this issue up |
+| insane | Difficulty level: you need to be a total wizard to figure this out |
+| enhancement | Making things better but without fixing an issue |
+| fix | Fixing a pre-existing problem with the code |
 
 ### Pull Requests
 
-- Create branch. If there is an issue, have the branch name related to the linked issue, otherwise give it a descriptive name relating to what the work covers. See some examples below.
+* Create branch. If there is an issue, have the branch name related to the linked issue, otherwise give it a descriptive name relating to what the work covers. See some examples below.
 
-| PR-prefix       | Purpose             | Example  |
-| ------------- |:----------------:| -----:|
-| issuenumber_     | When it relating to a pre-existing issues | issuenumber_583 |
-| enhancement      | Making things _better_ but without fixing an issue     |   enhancement_improveperformanceofquery |
-| fix  | Fixing a pre-existing problem with the code that isn't an issue      | fix_acceptnullsforinput |
+| PR-prefix | Purpose | Example |
+| --- | --- | --- |
+| issuenumber_ | When it relating to a pre-existing issues | issuenumber_583 |
+| enhancement | Making things _better_ but without fixing an issue | enhancement_improveperformanceofquery |
+| fix | Fixing a pre-existing problem with the code that isn't an issue | fix_acceptnullsforinput |
 
-- Open a Pull Request with the details listed in the [pull request template](../pull_request_template.md). The sections of this template should show in the body of any new pull request automatically.
+* Open a Pull Request with the details listed in the [pull request template](../pull_request_template.md). The sections of this template should show in the body of any new pull request automatically.
 
-- Please ensure that any changes you make comply with our [style guides](#style-guides).
+* Please ensure that any changes you make comply with our [style guides](#style-guides).
 
--	Include screenshots and animated GIFs in your pull request whenever possible.
+* Include screenshots and animated GIFs in your pull request whenever possible.
 
-- Make a comment with the pull request in any issues it relates to.
+* Make a comment with the pull request in any issues it relates to.
 
 ### Your First Code Contribution?
 
@@ -87,16 +77,12 @@ We will make efforts to label issues with `beginner` if we think they should onl
 
 We request that, where possible, you stick to the following format for your commit messages.
 
-- Use the present tense ("Add feature" not "Added feature")
-- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit the first line to 72 characters or less
-- After the first line, be descriptive about what has been done in the commit.
+* Use the present tense ("Add feature" not "Added feature")
+* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+* Limit the first line to 72 characters or less
+* After the first line, be descriptive about what has been done in the commit.
 
 For reference, [this blog](https://chris.beams.io/posts/git-commit/) encourages a similar style.
-
-### JavaScript Style Guide
-
-A full and up to date JavaScript style guide with examples can be accessed [here](https://github.com/MyUNiDAYS/StyleGuide/tree/master/Javascript).
 
 ## Documentation Style Guide
 
