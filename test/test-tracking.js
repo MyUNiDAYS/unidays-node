@@ -165,29 +165,18 @@ describe('RedemptionClient', () => {
         });
     });
 
-    describe('#toQueryStringWithMissingParam', () => {
+    describe('#toQueryStringWithMinimumParams', () => {
         let client;
         let redemption;
         before(() => {
-            client = new RedemptionClient('a partner Id', 'the transaction id', 'GBP');
-            redemption = {
-                orderTotal: 209.00,
-                itemsUNiDAYSDiscount: 13.00,
-                code: 'a code',
-                itemsTax: 34.50,
-                shippingGross: 5.00,
-                shippingDiscount: 3.00,
-                itemsGross: 230.00,
-                itemsOtherDiscount: 10.00,
-                UNiDAYSDiscountPercentage: 10.00,
-                newCustomer: false
-            };
+            client = new RedemptionClient('partnerId', 'transactionId', 'GBP');
+            redemption = {};
         });
 
         it('should serialise a full redemption without undefined parameters', () => {
             let qs = client._toQueryString(redemption);
 
-            assert(qs.includes('?PartnerId=a+partner+Id&TransactionId=the+transaction+id&MemberId=&Currency=GBP&OrderTotal=209.00&ItemsUNiDAYSDiscount=13.00&Code=a+code&ItemsTax=34.50&ShippingGross=5.00&ShippingDiscount=3.00&ItemsGross=230.00&ItemsOtherDiscount=10.00&UNiDAYSDiscountPercentage=10.00&NewCustomer='));
+            assert(qs.includes('?PartnerId=partnerId&TransactionId=transactionId&MemberId=&Currency=GBP&OrderTotal=&ItemsUNiDAYSDiscount=&Code=&ItemsTax=&ShippingGross=&ShippingDiscount=&ItemsGross=&ItemsOtherDiscount=&UNiDAYSDiscountPercentage=&NewCustomer='));
         });
     });
 
