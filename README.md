@@ -45,7 +45,7 @@ Here is a description of all available parameters. Which of these you provide ar
 
 | Parameter | Description | Data Type | Example |
 |---|---|---|---|
-| partnerId | Your PartnerId as provided by UNiDAYS. If you operate in multiple geographic regions you MAY have a different PartnerId for each region | String | XaxptFh0sK8Co6pI== |
+| partnerId | Your PartnerId as provided by UNiDAYS. If you operate in multiple geographic regions you MAY have a different PartnerId for each region | Base64 Encoded Guid | XaxptFh0sK8Co6pI== |
 | transactionId | A unique ID for the transaction in your system | String | Order123 |
 | currency | The ISO 4217 currency code | String | GBP |
 
@@ -54,7 +54,7 @@ Having **either** Code or MemberID as a parameter is also mandatory:
 | Parameter | Description | Data Type | Example |
 |---|---|---|---|
 | code | The UNiDAYS discount code used | String | ABC123 |
-| memberId | Only to be provided if you are using a codeless integration | String | 0LTio6iVNaKj861RM9azJQ== |
+| memberId | Only to be provided if you are using a codeless integration | Base64 Encoded Guid | 0LTio6iVNaKj861RM9azJQ== |
 
 ### Additional Parameters
 
@@ -111,7 +111,7 @@ Once you have access to this transaction information, create a RedemptionClient 
 
 #### Return
 
-A URL will be returned to you, which can then be used to call the UNiDAYS Tracking API.
+A URL will be returned to you, which can then be used to call the UNiDAYS Tracking API. If successful a response with a status code of 200 OK will be returned. This will only work for `GET` requests.
 
 #### Example
 
@@ -122,7 +122,7 @@ A URL will be returned to you, which can then be used to call the UNiDAYS Tracki
 const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-// UNiDAYS will provide your partnerId.
+// UNiDAYS will provide your partnerId. The partnerId GUID needs to be Base64 encoded before passing it to the DirectTrackingDetailsBuilder
 var partnerId = '0LTio6iVNaKj861RM9azJQ==';
 
 // These must be based on the real values of the transaction
@@ -164,7 +164,7 @@ Once you have access to this transaction information, create a RedemptionClient 
 
 #### Return
 
-A signed URL will be returned to you, which can then be used to call the UNiDAYS Tracking API.
+A signed URL will be returned to you, which can then be used to call the UNiDAYS Tracking API. If successful a response with a status code of 200 OK will be returned. This will only work for `GET` requests.
 
 #### Example
 
@@ -175,7 +175,7 @@ A signed URL will be returned to you, which can then be used to call the UNiDAYS
 const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-// UNiDAYS will provide your partnerId and signingKey.
+// UNiDAYS will provide your partnerId and signingKey. The partnerId GUID needs to be Base64 encoded before passing it to the DirectTrackingDetailsBuilder
 var partnerId = '0LTio6iVNaKj861RM9azJQ==',
     signingKey = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
 
@@ -219,7 +219,7 @@ Once you have access to this transaction information, create a RedemptionClient 
 
 #### Return
 
-A signed URL will be returned to you, which can then be used to call the UNiDAYS Tracking API.
+A signed URL will be returned to you, which can then be used to call the UNiDAYS Tracking API.  If successful a response with a status code of 204 No Content will be returned. This will work for both `POST` and `GET` requests.
 
 #### Example
 
@@ -230,7 +230,7 @@ A signed URL will be returned to you, which can then be used to call the UNiDAYS
 const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-// UNiDAYS will provide your partnerId and signingKey.
+// UNiDAYS will provide your partnerId and signingKey. The partnerId GUID needs to be Base64 encoded before passing it to the DirectTrackingDetailsBuilder.
 var partnerId = '0LTio6iVNaKj861RM9azJQ==',
     signingKey = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
 
@@ -274,7 +274,7 @@ The underlying implementation of `recordRedemption` uses node-fetch to call the 
 const UNiDAYS = require('unidays-node'),
       RedemptionClient = UNiDAYS.RedemptionClient;
 
-// UNiDAYS will provide your partnerId and signingKey.
+// UNiDAYS will provide your partnerId and signingKey. The partnerId GUID needs to be Base64 encoded before passing it to the DirectTrackingDetailsBuilder
 var partnerId = '0LTio6iVNaKj861RM9azJQ==',
     signingKey = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
 

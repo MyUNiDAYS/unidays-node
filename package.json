@@ -22,10 +22,5 @@
   },
   "dependencies": {
     "node-fetch": "^1.6.3"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run standard"
-    }
   }
 }
