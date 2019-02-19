@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "ava": "^1.2.1",
-    "co-exec": "^1.0",
+    "co-exec": "^1.1.0",
     "codecov": "^3.2.0",
     "fetch-mock": "^7.3.0",
     "ghooks": "^2.0.4",
