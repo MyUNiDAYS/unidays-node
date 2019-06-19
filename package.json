@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node ./node_modules/mocha/bin/mocha",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "standard": "standard index.js"
+    "standard": "standard index.js lib/**"
   },
   "author": "UNiDAYS",
   "license": "ISC",
