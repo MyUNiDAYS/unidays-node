@@ -11,14 +11,14 @@
   "author": "UNiDAYS",
   "license": "ISC",
   "devDependencies": {
-    "ava": "^2.1.0",
+    "ava": "^3.5.0",
     "co-exec": "^1.1.0",
     "codecov": "^3.5.0",
     "fetch-mock": "^7.3.3",
     "ghooks": "^2.0.4",
-    "mocha": "^6.1.4",
+    "mocha": "^7.1.0",
     "nyc": "^15.0.0",
-    "standard": "^12.0.1"
+    "standard": "^14.3.3"
   },
   "dependencies": {
     "node-fetch": "^2.6.0"
