@@ -8,7 +8,7 @@ script:
 - npm test
 deploy:
   provider: npm
-  email: dev.api@mynidays.com
+  email: dev.api@myunidays.com
   api_key:
     secure: ciSh+iJSF54cbspPda9Mto/cPNs2wQkV6ra1SGL9h0ZUQ0jQkDCY/j+MYP3FkFJSt2uCXsGXWp+v3yPWvSWTEF8wIcCgLOT3C20+uPkcf2fdNyOpYk/zJUjaIzNQ8qFrvA/vF+2kqpQk5Tv2fG1/rb+vjnPtUYapwKZtptms0bzi7foG42iH3HioWW/jP3ER5k9DzIaJnLvxuVvqdUW5yTTk1nvc1dOmxmejAB/NbIfAFtuzFU8z7vqb6EH4DugUbCGK76mg38wrDSVCY4IGpOm3qd0Vsg/7BOBVp35iBzM9cSZMQSM0XIgH5eOcMUiIk12eklPfva8n/kF/5p5wIw5UTlWedw8M7FXcqG5zi2FwaSlVaeZUsVXMyah01yjKadS+dF8hwyQw69Kkx3s/K0nH0gLziTmALRJBafU3UC3rfHpGK/Bd7x45MPieetBizPyaKW611kcbmEhVbY2mq1du4r15BIHEtBPlGTH+yxITMmCsBo/bwwbGEe3Q37w5yDLkFNiUgW81MMIv4ALNiq5H+9faQ7fdP0lj70eWgEIECLylEfL2725f6dyDOZa7wX44tfWcFjP2FQXuighe3Zbz0ThRbExOtmwzfalmnhsz53hFGEiTqYVJP8SgN6m8/0l8DOhB/yIfSxXB3v978qRJ3Yw6JPy2nMr3l2l10uQ=
   on:
