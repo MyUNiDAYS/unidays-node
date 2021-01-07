@@ -11,7 +11,7 @@
   "author": "UNiDAYS",
   "license": "ISC",
   "devDependencies": {
-    "ava": "^3.10.1",
+    "ava": "^3.15.0",
     "co-exec": "^1.1.0",
     "codecov": "^3.7.1",
     "fetch-mock": "^7.7.3",
