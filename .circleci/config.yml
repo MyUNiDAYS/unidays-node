@@ -1,0 +1,71 @@
+version: 2.1
+
+jobs:
+  test:
+    parameters:
+      node-version:
+        type: string
+    docker:
+      - image: circleci/node:<<parameters.node-version>>
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+            npm install jest-junit
+      - run:
+          name: Run tests
+          command: npm test -- --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit
+      - store_test_results:
+          path: ./reports/junit
+      - when:
+          condition:
+            equal: [ "fermium", <<parameters.node-version>> ]
+          steps:
+            - persist_to_workspace:
+                root: .
+                paths:
+                  - lib
+                  - index.js
+                  - package.json
+                  - README.md
+  deploy:
+    docker:
+      - image: circleci/node:fermium
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+
+workflows:
+  version: 2
+  branch-push:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              node-version: ["erbium", "fermium"]
+          filters:
+            branches:
+              ignore: master
+  master-push:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              node-version: ["erbium", "fermium"]
+          filters:
+            branches:
+              only: master
+      - deploy:
+          name: deploy
+          requires:
+            - test
