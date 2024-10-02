@@ -1,8 +1,16 @@
 {
   "name": "unidays-node",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "This is the NodeJS library for integrating with UNiDAYS. This is to be used for coded and codeless integrations. The following documentation provides descriptions of the implementations and examples.",
   "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
   "scripts": {
     "test": "node ./node_modules/mocha/bin/mocha",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
@@ -22,5 +30,6 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
-  }
+  },
+  "type": "commonjs"
 }
