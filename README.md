@@ -116,6 +116,7 @@ A URL will be returned to you, which can then be used to call the UNiDAYS Tracki
 
 ```javascript
 
+// CommonJS
 "use strict";
 
 const UNiDAYS = require('unidays-node'),
@@ -151,6 +152,41 @@ var trackingServerUrl = client.getTrackingScriptUrl(redemption);
 // You now have a URL which can be used in script element to call the API.
 ```
 
+```javascript
+
+// ESM
+import { RedemptionClient } from 'unidays-node';
+
+// UNiDAYS will provide your partnerId. The partnerId GUID needs to be Base64 encoded before passing it to the DirectTrackingDetailsBuilder
+const partnerId = '0LTio6iVNaKj861RM9azJQ==';
+
+// These must be based on the real values of the transaction
+const transactionId = 'Order123',
+    currency = 'GBP';
+
+// Create a reference to the RedemptionClient object, passing in your partnerId, transactionId and currency.
+const client = new RedemptionClient(partnerId, transactionId, currency);
+
+// Create an object containing the remaining corresponding transaction details
+const redemption = {
+    orderTotal: 209.00,
+    itemsUNiDAYSDiscount: 13.00,
+    code: 'ABC123',
+    itemsTax: 34.50,
+    shippingGross: 5.00,
+    shippingDiscount: 3.00,
+    itemsGross: 230.00,
+    itemsOtherDiscount: 10.00,
+    UNiDAYSDiscountPercentage: 10.00,
+    newCustomer: true
+};
+
+// Pass this object into the getTrackingScriptUrl method.
+const trackingServerUrl = client.getTrackingScriptUrl(redemption);
+
+// You now have a URL which can be used in script element to call the API.
+```
+
 ### Get Signed Tracking Script URL
 
 This is known as our signed client-to-server integration.
@@ -169,6 +205,7 @@ A signed URL will be returned to you, which can then be used to call the UNiDAYS
 
 ```javascript
 
+// CommonJS
 "use strict";
 
 const UNiDAYS = require('unidays-node'),
@@ -201,6 +238,42 @@ var redemption = {
 
 // Pass this object into the getSignedTrackingScriptUrl method, along with your signing key.
 var trackingServerUrl = client.getSignedTrackingScriptUrl(redemption, signingKey);
+
+// You now have a signed URL which can be used in a script element to call the API.
+```
+
+```javascript
+
+// ESM
+import { RedemptionClient } from 'unidays-node';
+
+// UNiDAYS will provide your partnerId and signingKey. The partnerId GUID needs to be Base64 encoded before passing it to the DirectTrackingDetailsBuilder
+const partnerId = '0LTio6iVNaKj861RM9azJQ==',
+    signingKey = '+ON3JGqQtsoagk0Sgdd6gDkz/MHr95T+LeYmPzSkBB9Y/LMPNFiXRYc90I73DLUJDXTDDjNQ8DbYXYTkH4SNnuer43v4LmhPHhB5k/9vy5Pmtt2CnNAiylYIQK/Jm0xYhRsGUVmT9GzVx1CyeaxzfPkGsdszlcfy1HuaxGv/yjA=';
+
+// These must be based on the real values of the transaction
+const transactionId = 'Order123',
+    currency = 'GBP';
+
+// Create a reference to the RedemptionClient object, passing in your partnerId, transactionId and currency.
+const client = new RedemptionClient(partnerId, transactionId, currency);
+
+// Create an object containing the remaining corresponding transaction details
+const redemption = {
+    orderTotal: 209.00,
+    itemsUNiDAYSDiscount: 13.00,
+    code: 'ABC123',
+    itemsTax: 34.50,
+    shippingGross: 5.00,
+    shippingDiscount: 3.00,
+    itemsGross: 230.00,
+    itemsOtherDiscount: 10.00,
+    UNiDAYSDiscountPercentage: 10.00,
+    newCustomer: true
+};
+
+// Pass this object into the getSignedTrackingScriptUrl method, along with your signing key.
+const trackingServerUrl = client.getSignedTrackingScriptUrl(redemption, signingKey);
 
 // You now have a signed URL which can be used in a script element to call the API.
 ```
